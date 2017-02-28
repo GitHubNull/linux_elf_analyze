@@ -2,14 +2,15 @@
 #include <elf.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-int readElfIn(char *fileName);
-int isElf(char *tag);
-int isExcute(int tag);
-int initSrc(char *src);
-int excuteFile(char *src);
-int isStop(char *tag);
-int stop(char *src);
+bool readElfIn(FILE *fp, char **elfTag, int *excuteFile);
+bool isElf(char *tag);
+bool isExcute(int tag);
+bool initSrc(char *src);
+bool excuteFile(char *src);
+bool isStop(char *tag);
+bool stop(char *src);
 
 int main(int argc, char **argv)
 {
@@ -25,40 +26,55 @@ int main(int argc, char **argv)
     printf("faied to open file: %s.\n", argv[1]);
     exit(-1);
   }
-
-  Elf32_Ehdr hdr;
-  if(1 != fread(&hdr, sizeof(hdr), 1, fp)){
-    printf("failed to read elf header.\n");
+  char *elfTag;
+  int excuteTag = -1;
+  if(false == readElfIn(fp, &elfTag, &excuteTag)){
+    printf("readElfin error!\n");
     exit(-1);
   }
-
-  char *strp = (char *)malloc(sizeof(char) * (4));
-  sprintf(strp, "%c%c%c", hdr.e_ident[EI_MAG1], hdr.e_ident[EI_MAG2], hdr.e_ident[EI_MAG3]);
-  strp[3] = 0;
-  if(0 == isElf(strp)){
-    printf("file: %s is elf file.\n", argv[1]);
+  if(true == isElf(elfTag)){
+    printf("[%s] is a elf file.\n", argv[1]);
+  }else{
+    printf("[%s] is not a elf file.\n", argv[1]);
+    exit(-1);
   }
-
-  if(0 == isExcute(hdr.e_type)){
-    printf("file: %s is a excuteable file.\n", argv[1]);
+  if(true == isExcute(excuteTag)){
+    printf("[%s] is a excuteable file.\n", argv[1]);
+  }else{
+    printf("[%s] is not a excuteable file.\n", argv[1]);
+    exit(-1);
   }
   return 0;
 }
 
-int isElf(char *tag)
+bool readElfIn(FILE *fp, char **elfTag, int *excuteTag)
 {
-  if(NULL != strstr(tag, "ELF")){
-    return 0;
+  Elf64_Ehdr hdr;
+  if(1 != fread(&hdr, sizeof(hdr), 1, fp)){
+    printf("failed to read read elf header.\n");
+    return false;
+  }
+  (*elfTag) = (char *)malloc(sizeof(char) * (4));
+  sprintf(*elfTag, "%c%c%c%c", hdr.e_ident[EI_MAG1], hdr.e_ident[EI_MAG2],
+          hdr.e_ident[EI_MAG3], '\0');
+  (*excuteTag) = hdr.e_type;
+  return true;
+}
+
+bool isElf(char *tag)
+{
+  if(0 == strcmp(tag, "ELF")){
+    return true;
   }else{
-    return -1;
+    return false;
   }
 }
 
-int isExcute(int tag)
+bool isExcute(int tag)
 {
   if(2 == tag){
-    return 0;
+    return true;
   }else{
-    return -1;
+    return false;
   }
 }
