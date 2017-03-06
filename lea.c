@@ -58,6 +58,7 @@ bool readElfIn(FILE *fp, char **elfTag, int *excuteTag)
   sprintf(*elfTag, "%c%c%c%c", hdr.e_ident[EI_MAG1], hdr.e_ident[EI_MAG2],
           hdr.e_ident[EI_MAG3], '\0');
   (*excuteTag) = hdr.e_type;
+  //printf("e_phoff: %LL\n", hdr.e_phoff);
   return true;
 }
 

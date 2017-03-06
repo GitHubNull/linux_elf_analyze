@@ -1,7 +1,12 @@
 #include <stdio.h>
 
-int main()
+int main(int argc, char **argv, char **envp)
 {
-    printf("Hello!\n");
+    int cnt = 0;
+    printf("envp[0] = %s\n", *envp);
+    while(*(envp + 1)){
+        cnt += 1;
+        printf("envp[%d] = %s\n", cnt, *(envp++));
+    }
     return 0;
 }
