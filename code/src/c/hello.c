@@ -1,12 +1,12 @@
 #include <stdio.h>
-
+////////////////////////////////////// This is a test of comment.  //////////////////////////////////////////
 int main(int argc, char **argv, char **envp)
 {
     int cnt = 0;
-    printf("envp[0] = %s\n", *envp);
-    while(*(envp + 1)){
+    while(*(envp)){
+        printf("envp[%d] = %s\n", cnt, *(envp));
         cnt += 1;
-        printf("envp[%d] = %s\n", cnt, *(envp++));
+        envp++;
     }
     return 0;
 }

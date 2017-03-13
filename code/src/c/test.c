@@ -32,17 +32,17 @@ int main(int argc, char **argv, char **envp)
         exit(-3);
     }
 
-    Elf64_Ehdr *ehdr = (Elf64_Ehdr*)(buffer);
-    Elf64_Phdr *phdr = (Elf64_Phdr*)(buffer + ehdr->e_phoff);
+    Elf32_Ehdr *ehdr = (Elf32_Ehdr*)(buffer);
+    Elf32_Phdr *phdr = (Elf32_Phdr*)(buffer + ehdr->e_phoff);
     int i = 0;
     for( ; i < ehdr->e_phnum; i++, phdr++){
         printf("p_type:\t\t%#016x\n", phdr->p_type);
         printf("p_flags:\t%#016x\n", phdr->p_flags);
-        printf("p_offset:\t%#016lx\n", phdr->p_offset);
-        printf("p_vaddr:\t%#016lx\n", phdr->p_paddr);
-        printf("p_filesz:\t%#016lx\n", phdr->p_filesz);
-        printf("p_memsz:\t%#016lx\n", phdr->p_memsz);
-        printf("p_align:\t%#016lx\n", phdr->p_align);
+        printf("p_offset:\t%#016x \n", phdr->p_offset);
+        printf("p_vaddr:\t%#016x\n", phdr->p_paddr);
+        printf("p_filesz:\t%#016x\n", phdr->p_filesz);
+        printf("p_memsz:\t%#016x\n", phdr->p_memsz);
+        printf("p_align:\t%#016x\n", phdr->p_align);
         printf("\n===========================================\n");
     }
     fclose(fp);
