@@ -1,2 +1,1 @@
-#linux_elf_analyze
-Just test.
+This is file comfine director exist.
