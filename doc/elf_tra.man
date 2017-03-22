@@ -1,0 +1,12 @@
+linux 程序手册
+
+名字
+        elf - 可执行连接格式文件（Executable and Linking Format）。
+
+概述
+        #include <elf.h>
+
+描述
+        头文件 <elf.h> 定义了可执行连接格式二进制文件。这些文件包括常见的可执行文件以及可重定位文件、内核文件、动态共享库文件。
+
+
