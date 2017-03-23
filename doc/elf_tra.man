@@ -1,4 +1,4 @@
-linux 程序手册
+ELF（5）Linux程序员手册ELF（5）
 
 名字
         elf - 可执行连接格式文件（Executable and Linking Format）。
@@ -7,6 +7,57 @@ linux 程序手册
         #include <elf.h>
 
 描述
-        头文件 <elf.h> 定义了可执行连接格式二进制文件。这些文件包括常见的可执行文件以及可重定位文件、内核文件、动态共享库文件。
+        头文件<elf.h>定义了ELF可执行二进制文件的格式。这些文件包括常见的可执行文件以
+        及可重定位文件、内核文件、动态共享库文件。
+
+        一个可执行连接文件包含ELF头接着是一个程序头表或者节头表，或者两者都有。可执行
+        连接文件的ELF头数据从文件数据的起始位置开始。程序头表以及节头表在文件中的偏移
+        位置在ELF头中定义。这两个表详细描述了ELF文件特征。
+
+        以上提到的头文件 <elf.h> 将ELF文件组织为c语言结构体以包括动态节、重定位节、
+        符号表。
+
+        以下类型用于N位体系结构（N = 32,64，ElfN 代表 Elf32 或 Elf64，uintN_t表示
+        uint32_t或uint64_t）：
+
+        ElfN_Addr 无符号程序地址，uintN_t，（Elf32_Addr：4字节， Elf64_Addr：8字节）
+        ElfN_Off 无符号文件偏移量，uintN_t，（Elf32_Addr：4字节， Elf64_Addr：8字节）
+        ElfN_Section 			无符号节索引，uint16_t
+        ElfN_Versym				无符号版本符号信息，uint16_t
+        Elf_Byte 				无符号字节
+        ElfN_Half uint16_t
+        ElfN_Sword int32_t
+        ElfN_Word uint32_t
+        ElfN_Sxword int64_t
+        ElfN_Xword uint64_t
+
+        （注：* BSD术语有所不同，有Elf64_Half两倍于Elf32_Half大小的，然后
+        Elf64Quarter用于表示uint16_t。为了避免混淆，下面将对这些类型进行特别说明。）
+
+        文件格式定义的所有数据结构遵循相关类型的“原生”大小和对齐准则。 如有需要，
+       	将对数据结构进行显式填充，将数据结构大小强制调整为4的倍数，以确保4字节对象保
+       	持4字节对齐等等。
+
+       	ELF标头由Elf32_Ehdr或Elf64_Ehdr结构描述：
+
+       	#define EI_NIDENT 16
+
+       	typedef struct {
+           unsigned char e_ident[EI_NIDENT];
+           uint16_t      e_type;
+           uint16_t      e_machine;
+           uint32_t      e_version;
+           ElfN_Addr     e_entry;
+           ElfN_Off      e_phoff;
+           ElfN_Off      e_shoff;
+           uint32_t      e_flags;
+           uint16_t      e_ehsize;
+           uint16_t      e_phentsize;
+           uint16_t      e_phnum;
+           uint16_t      e_shentsize;
+           uint16_t      e_shnum;
+           uint16_t      e_shstrndx;
+       	} ElfN_Ehdr;
+
 
 
