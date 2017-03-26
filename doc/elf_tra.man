@@ -220,3 +220,25 @@ ELF（5）Linux程序员手册ELF（5）
 	程序头只对可执行文件和共享对象文件有意义。文件通过ELF头的e_phentsize和e_phnum成员
 	指定自己的程序头大小。 ELF文件程序头由类型 Elf32_Phdr 或 Elf64_Phdr 描述取决于
 	架构：             
+
+			typedef struct {
+               uint32_t   p_type;
+               Elf32_Off  p_offset;
+               Elf32_Addr p_vaddr;
+               Elf32_Addr p_paddr;
+               uint32_t   p_filesz;
+               uint32_t   p_memsz;
+               uint32_t   p_flags;
+               uint32_t   p_align;
+           	} Elf32_Phdr;
+
+           	typedef struct {
+               uint32_t   p_type;
+               uint32_t   p_flags;
+               Elf64_Off  p_offset;
+               Elf64_Addr p_vaddr;
+               Elf64_Addr p_paddr;
+               uint64_t   p_filesz;
+               uint64_t   p_memsz;
+               uint64_t   p_align;
+           	} Elf64_Phdr;		
