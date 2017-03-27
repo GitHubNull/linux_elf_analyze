@@ -1,10 +1,12 @@
 ELF（5）Linux程序员手册ELF（5）
 
-名字
-        elf - 可执行连接格式文件（Executable and Linking Format）。
 
-概述
-        #include <elf.h>
+
+名称
+       elf - 可执行和链接格式（Executable and Linking Format）文件
+
+概要
+       #include <elf.h>
 
 描述
         头文件<elf.h>定义了ELF可执行二进制文件的格式。这些文件包括常见的可执行文件以
@@ -59,5 +61,236 @@ ELF（5）Linux程序员手册ELF（5）
            uint16_t      e_shstrndx;
        	} ElfN_Ehdr;
 
+       头文件<elf.h>定义了ELF可执行二进制文件的格式。这些文件是常见的可执行文件
+       文件，可重定位对象文件，核心文件和共享库。
 
+       ELF文件由ELF头，后跟程序头表或节表头或两者都有。 ELF头总是在文件的最开始部分。
+       程序头表和节表头在文件中的偏移量在ELF头中定义。这两个表格描述了文件的其余的特
+       征。
 
+       上述头文件<elf.h>被描述为C结构，包括动态节结构、重定位表和符号表。
+
+       以下类型用于描述N位体系结构（N = 32,64，ElfN表示Elf32或Elf64，uintN_t表示
+       uint32_t或uint64_t）：
+
+           ElfN_Addr       无符号程序地址, uintN_t
+           ElfN_Off        无符号文件偏移量, uintN_t
+           ElfN_Section    无符号节索引, uint16_t
+           ElfN_Versym     无符号版本符号信息, uint16_t
+           Elf_Byte        无符号字节
+           ElfN_Half       uint16_t
+           ElfN_Sword      int32_t
+           ElfN_Word       uint32_t
+           ElfN_Sxword     int64_t
+           ElfN_Xword      uint64_t
+
+        （注意：* BSD术语有点不同，Elf64_Half是Elf32_Half的两倍，Elf64Quarter表示
+        	uint16_t。为了避免混淆，下面将对这些类型进行详述）
+
+        文件格式定义的所有数据结构遵循相关类型的“自然”大小和对齐准则。
+       	如果需要，对数据结构进行显式填充，以确保4字节对象的4字节对齐，强制结构尺寸
+       	为4字节的倍数等。
+
+       	ELF标头由Elf32_Ehdr或Elf64_Ehdr类型描述：
+
+       		#define EI_NIDENT 16
+
+           	typedef struct {
+               unsigned char e_ident [EI_NIDENT];
+               uint16_t e_type;
+               uint16_t e_machine;
+               uint32_t e_version;
+               ElfN_Addr e_entry;
+               ElfN_Off e_phoff
+               ElfN_Off e_shoff;
+               uint32_t e_flags;
+               uint16_t e_ehsize;
+               uint16_t e_phentsize;
+               uint16_t e_phnum;
+               uint16_t e_shentsize;
+               uint16_t e_shnum;
+               uint16_t e_shstrndx;
+           	} ElfN_Ehdr;
+
+         这些字段具有以下含义：
+
+       	e_ident     这个字节数组指定解释文件，独立于处理器或文件的其他内容。在这个字
+       	节数组中，大部分内容都是以EI_为前缀的宏定义，可能还包含其他以ELF为前缀的宏。
+       	宏定内容义如下：
+
+	       	EI_MAG0     魔数的第一个字节。必须填充ELFMAG0。 （0：0x7f）
+
+	       	EI_MAG1  	魔数的第二个字节。必须填充ELFMAG1。 （1：'E'）
+
+	       	EI_MAG2   	魔数的第三个字节。必须填充ELFMAG2。 （2：'L'）
+
+	       	EI_MAG3  	魔数的第四个字节。必须填充ELFMAG3。 （3：'F'）
+
+	       	EI_CLASS  	第五个字节标识此二进制文件的体系结构：
+
+	       		ELFCLASSNONE 	此类无效。
+	            ELFCLASS32		这定义了32位架构。它支持文件和虚拟地址空间高达4G字节。
+	            ELFCLASS64  	这定义了64位架构。
+
+	        EI_DATA  	第六个字节指定文件数据编码格式。目前支持以下编码：
+
+	        	ELFDATANONE  	未知数据格式。
+	           	ELFDATA2LSB  	二进制补码，小端。
+	           	ELFDATA2MSB  	二进制补码，大端。
+
+	        EI_VERSION  	第七个字节是ELF规范的版本号：
+	           	EV_NONE 版本无效。
+	           	EV_CURRENT 当前版本。
+
+	        EI_OSABI  	第八个字节标识对象所针对的操作系统和ABI。其他具有标志和值ELF
+	        结构的字段具有平台特定含义，这些字段的解释由该字节的值决定。例如：
+
+	        	ELFOSABI_NONE  		与ELFOSABI_SYSV相同
+				ELFOSABI_SYSV  		UNIX系统V ABI。
+				ELFOSABI_HPUX  		HP-UX ABI。
+				ELFOSABI_NETBSD 	NetBSD ABI。
+				ELFOSABI_LINUX  	Linux ABI。
+				ELFOSABI_SOLARIS  	Solaris ABI。
+				ELFOSABI_IRIX  		IRIX ABI。
+				ELFOSABI_FREEBSD  	FreeBSD ABI。
+				ELFOSABI_TRU64  	TRU64 UNIX ABI。
+				ELFOSABI_ARM 		ARM体系结构ABI。
+				ELFOSABI_STANDALONE	独立（嵌入式）ABI。
+
+			EI_ABIVERSION
+				第九个字节标识对象所针对的ABI的版本。这个字段是用于区分ABI的不兼容版
+				本。该版本号的解释取决于EI_OSABI字段识别的ABI。符合这一点的应用规格
+				使用值0。
+
+			EI_PAD  	开始填充。这些字节被保留并设置为零。解析程序应该忽略他们。如
+			果当前未使用的字节被给予特殊意义，EI_PAD的值将在以后更改。
+
+			EI_NIDENT e_ident数组的大小。
+
+		e_type  	该结构的这个成员标识对象文件类型：
+
+			ET_NONE  	未知类型。
+			ET_REL  	可重定位文件。
+			ET_EXEC  	可执行文件。
+			ET_DYN  	共享对象文件。
+			ET_CORE  	核心文件。
+
+		e_machine	此成员为文件指定所需的体系结构。例如：
+
+			EM_NONE		未知的机器。
+			EM_M32 		AT＆T WE 32100。
+			EM_SPARC 	Sun Microsystems SPARC。
+			EM_386 		Intel 80386。
+			EM_68K		Motorola 68000.
+			EM_88K		Motorola 88000.
+			EM_860 		Intel 80860。
+			EM_MIPS 	MIPS RS3000（仅限big-endian）。
+			EM_PARISC 	HP / PA。
+			EM_SPARC32PLUS
+			       		具有增强的指令集的SPARC。
+			EM_PPC 		PowerPC。
+			EM_PPC64 	PowerPC 64位。
+			EM_S390 	IBM S / 390
+			EM_ARM		高级RISC机
+			EM_SH		Renesas SuperH
+			EM_SPARCV9 	SPARC v9 64位。
+			EM_IA_64 	Intel Itanium
+			EM_X86_64 	AMD x86-64
+			EM_VAX 		DEC Vax。
+
+		e_version此成员标识文件版本：
+
+           	EV_NONE		版本无效。
+           	EV_CURRENT	当前版本。
+
+        e_entry		执行该程序的入口点。如果文件没有入口点，则该成员保持为零。
+
+        e_phoff		该成员保存程序头表在文件中偏移量（以字节为单位）。如果文件没有程
+        序头表，该成员持有零。
+
+        e_shoff		该成员保存节头表在文件中偏移量（以字节为单位）。如果文件没有段
+        头表该成员保持为零。
+
+    e_flags  	此成员保存与文件关联的特定处理器的标志。标志名称采取EF_`machine_flag'
+    的形式。目前没有定义任何标志。
+
+    e_ehsize 	此成员保存ELF头的大小（以字节为单位）。
+
+    e_phentsize		该成员保存文件程序头表中每一个项的大小（以字节为单位）所有项都
+    相同尺寸。
+
+    e_phnum 	该成员保存程序头表中的项数。因此e_phentsize和e_phnum给出了程序头表
+    的大小（以字节为单位）。如果文件没有程序头，e_phnum保持值为零。
+
+    			如果程序头表中的项数大于或等于PN_XNUM（0xffff），则该成员
+               	保持PN_XNUM（0xffff），程序头表中的实际数目保存在节头表的sh_info成员
+               	中。否则，节头表的sh_info成员值为零。
+
+               	PN_XNUM这被定义为0xffff，e_phnum可以具有的最大数字，指定程序头确切
+               	的数目保存在哪里。
+
+    e_shentsize		此成员保存每一个节头表大小（以字节为单位）。 节头是节头表中的一个
+    项; 所有项的大小相同。
+
+    e_shnum 	该成员保存节头表中的项数。因此 e_shentsize和e_shnum 的乘积给出了
+    节头表的大小（以字节为单位）。如果文件节头表，e_shnum保持值为零。
+
+    			如果段头表中的项数大于或等于 SHN_LORESERVE（0xff00），则 e_shnum
+				保持值为零，节头表的实际项数包含在节头表中的 sh_size字段中。
+				否则,节头表成员 sh_size 值为零。
+
+	e_shstrndx		该成员保存与节名称字符串表相关联的项的节头表索引。如果文件没有
+	节名称字符串表，则此成员值为 SHN_UNDEF 。
+
+					如果节名字符串表的节索引大于或等于 SHN_LORESERVE ( 0xff00 ),则
+					此成员值为 SHN_XINDEX ( 0xffff ),节名字符串表的实际节索引包含在
+					节头中索引为 0 的 sh_link 字段中。否则,节头表的 sh_link 成员值
+					为零。
+
+					SHN_UNDEF 	此值标记未定义，缺失，无关或无意义的段引用。
+                    例如，相对 SHN_UNDEF 而言“defined”符号是未定义的符号。
+
+                    SHN_LORESERVE 	此值指定保留索引范围的下限。
+
+                    SHN_LOPROC		大于或等于SHN_HIPROC的值被保留用于特定于处理器
+                    的语义。
+
+                    SHN_HIPROC小于或等于SHN_LOPROC的值被保留用于特定处理器的语义。
+
+                    SHN_ABS       该值指定相应引用的绝对值。例如，相对于有绝对值节号 
+                    SHN_ABS 定义的符号不受重定位影响。
+
+                    SHN_COMMON		相对于本节定义的符号是常见的符号，例如
+                    Fortran COMMON或未分配的C外部变量。
+
+                    SHN_HIRESERVE 		此值指定 SHN_LORESERVE 与 SHN_HIRESERVE 
+                    之间的保留索引范围的上限，这些值不引用节头表。那就是节头表不包含
+                    保留索引的项。
+
+	可执行或共享对象文件的程序头表是一个结构数组，每个结构描述一个段或其他
+	系统需要为执行的程序准备的信息。目标文件段包含一个或多个部分。
+	程序头只对可执行文件和共享对象文件有意义。文件通过ELF头的e_phentsize和e_phnum成员
+	指定自己的程序头大小。 ELF文件程序头由类型 Elf32_Phdr 或 Elf64_Phdr 描述取决于
+	架构：             
+
+			typedef struct {
+               uint32_t   p_type;
+               Elf32_Off  p_offset;
+               Elf32_Addr p_vaddr;
+               Elf32_Addr p_paddr;
+               uint32_t   p_filesz;
+               uint32_t   p_memsz;
+               uint32_t   p_flags;
+               uint32_t   p_align;
+           	} Elf32_Phdr;
+
+           	typedef struct {
+               uint32_t   p_type;
+               uint32_t   p_flags;
+               Elf64_Off  p_offset;
+               Elf64_Addr p_vaddr;
+               Elf64_Addr p_paddr;
+               uint64_t   p_filesz;
+               uint64_t   p_memsz;
+               uint64_t   p_align;
+           	} Elf64_Phdr;		
