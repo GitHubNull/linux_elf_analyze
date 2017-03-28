@@ -1,4 +1,4 @@
-ELF（5）Linux程序员手册ELF（5）
+ELF（5）Linux　程序员手册　ELF（5）
 
 
 
@@ -452,10 +452,289 @@ ELF（5）Linux程序员手册ELF（5）
 
     包含程序和控制信息的各种节，下列各节由系统使用，并且具有指明的类型和属性：
 
+    .bss      构成程序的内存映像的未初始化数据。根据定义，系统在程序开始运行时会将数据初始化为零。如节类型 SHT_NOBITS 所指明的那样，此节属性类型是SHF_ALLOC和SHF_WRITE。
+
+    .comment  本节保存版本控制信息。此节类型是 SHT_PROGBITS。没有使用属性类型。
+
+    .ctors    本节保存C ++构造函数的初始化指针。此节类型是 SHT_PROGBITS。属性类型是SHF_ALLOC和SHF_WRITE。
+
+    .data     本节保存有助于程序内存映像的初始化数据。此节类型是 SHT_PROGBITS。属性类型是SHF_ALLOC和SHF_WRITE。
+
+    .data1    本节保存有助于程序内存映像的初始化数据。此节类型是 SHT_PROGBITS。属性类型是SHF_ALLOC和SHF_WRITE。
+
+    .debug    本节保存符号调试信息。内容未指定。此节类型是 SHT_PROGBITS。没有使用属性类型。
+
+    dtors     本节保存C ++析构函数的初始化指针。此节类型是 SHT_PROGBITS。属性类型是SHF_ALLOC和SHF_WRITE
+
+    .dynamic  本节保存动态链接信息。此节的属性将包括 SHF_ALLOC位。SHF_WRITE 位是否开启，与特定处理器相关。本节的类型是 SHT_DYNAMIC。属性之前已经说明。
+
+    .dynstr   此节保存动态链接所需的字符串，最常见的是表示名称关联的字符串，带有符号表项。此节类型是 SHT_STRTAB。使用的属性类型是 SHF_ALLOC。
+
+    .dynsym   本节保存动态链接符号表。本节的类型是 SHT_DYNSYM。使用的属性是 SHF_ALLOC。
     
+    .fini     本节保存有助于进程终止代码的可执行指令。程序退出时通常系统会安排执行本节中的代码。本节的类型是 SHT_PROGBITS。使用的属性是 SHF_ALLOC 和 SHF_EXECINSTR 。
+
+    .gnu.version
+              本节保存版本符号表，ElfN_Half 元素数组。本节的类型是 SHT_GNU_versym。使用的属性类型是 SHF_ALLOC。
+
+    .gnu.version_d
+              本节保存版本符号定义，ElfN_Verdef 结构表。本节的类型是 SHT_GNU_verdef。使用的属性类型是 SHF_ALLOC。
+
+    .gnu.version_r
+               本节保存所需的版本符号元素，ElfN_Verneed结构表。本节的类型是 SHT_GNU_versym。使用的属性类型是 SHF_ALLOC。
+
+    .got      本节保存全局偏移表。本节的类型是 SHT_PROGBITS。属性由处理器具体指定。
+
+    .hash     本节包含一个符号哈希表。本节的类型是 SHT_HASH。使用的属性是 SHF_ALLOC。
+
+    .init     本节包含有助于进程初始化代码的可执行指令。当一个程序开始运行，系统将在调用主程序之前执行本节中的代码。本节的类型是 SHT_PROGBITS。使用的属性是 SHF_ALLOC 和 SHF_EXECINSTR。
+
+    .interp   本节保存程序解释器的路径名。如果文件具有包含本节的可加载段，本节属性将包括 SHF_ALLOC 位。否则，该位处于关闭状态。本节的类型是 SHT_PROGBITS。
+
+    .line     本节保存符号调试的行号信息，其中描述了该对应关系程序源和机器代码。内容未指定。本节的类型是 SHT_PROGBITS。没有使用属性类型。
+
+    .note     本节保存“提示节”格式的信息。此节类型为 SHT_NOTE。没有使用属性类型。 OpenBSD 机器可执行文件通常包含一个.note.openbsd.ident 节来标识自己，让内核在加载文件时绕过任何兼容性的ELF二进制仿真测试。
+
+    .note.GNU-stack
+              本节用于Linux对象文件中声明堆栈属性。 本节的类型是 SHT_PROGBITS。唯一使用的属性是 SHF_EXECINSTR。这向GNU链接器指示目标文件需要一个可执行堆栈。
+
+    .plt     本节保存程序连接表。本节的类型是 SHT_PROGBITS。属性由处理器具体指定。
+
+    .relNAME  本节的类型是 SHT_REL。保存如下所诉的重定位信息。如果文件具有包括重定位的可加载段，则此节的属性将包括 SHF_ALLOC 位。否则，该位会处于禁用状态。通常，name 由应用重定位的节提供。因此，.text 的重定位节的名称通常为 .rel.text 或 .rela.text。
+
+    .relaNAME 本节的类型是 SHT_RELA。保存如下所诉的重定位信息。如果文件具有包括重定位的可加载段，则此节的属性将包括 SHF_ALLOC 位。否则，该位会处于禁用状态。通常，name 由应用重定位的节提供。因此，.text 的重定位节的名称通常为 .rel.text 或 .rela.text。
+
+    .rodata   本节保存通常构成进程映像中的非可写段的只读数据。本节的类型是 SHT_PROGBITS。使用的属性是 SHF_ALLOC。
+
+    .rodata1  本节保存通常构成进程映像中的非可写段的只读数据。本节的类型是 SHT_PROGBITS。使用的属性是 SHF_ALLOC。
+
+    .shstrtab 本节保存节名称。本节的类型是 SHT_STRTAB。没有使用属性类型。
+
+    .strtab   本节保存字符串，通常是表示与符号表各项关联的名称的字符串。如果文件具有包括符号字符串表的可装入段，则此节的属性将包括 SHF_ALLOC 位。否则，该位会处于禁用状态。本节的类型是 SHT_STRTAB。
+
+    .symtab   本节保存符号表，如果文件具有包含符号表的可装入段，则此节的属性将包括 SHF_ALLOC 位。否则，该位会处于禁用状态。本节的类型是 SHT_SYMTAB
+
+    .text     此节包含程序的“文本”或可执行指令。本节的类型是 SHT_PROGBITS。
+                 使用的属性是 SHF_ALLOC 和 SHF_EXECINSTR。
+
+    字符串表节保存的以'\0'结尾的字节，通常称为字符串。对象文件使用这些字符串来表示符号和节名称。一个引用一个字符串作为字符串节表的索引。
+    第一个字节（其为索引为零）是一个空字节（'\ 0'）。类似地，字符串表的最后一个字节也是空字节，确保所有字符串的终止符号。
+
+    目标文件的符号表包含查找和重新定位程序的符号定义所需的信息，符号表索引是这个数组的下标。
+
+              typedef struct {
+               uint32_t      st_name;
+               Elf32_Addr    st_value;
+               uint32_t      st_size;
+               unsigned char st_info;
+               unsigned char st_other;
+               uint16_t      st_shndx;
+              } Elf32_Sym;
+
+              typedef struct {
+               uint32_t      st_name;
+               unsigned char st_info;
+               unsigned char st_other;
+               uint16_t      st_shndx;
+               Elf64_Addr    st_value;
+               uint64_t      st_size;
+              } Elf64_Sym;
+
+    32位和64位版本都有同样的成员，只是顺序不一样。
+
+            st_name   此成员将目标文件的符号字符串表中的索引保存为字符表示符号名称。如果值为非零，则它表示给出符号名称的字符串表索引。 否则，符号表没有名字。
+
+            st_value  该成员给出关联符号的值。
+
+            st_size   许多符号具有相关联的大小。如果符号没有大小或未知的大小，该成员将保持为零。
+
+            st_info   此成员指定符号的类型和绑定属性：
+                      STT_NOTYPE  未定义符号的类型。
+
+                      STT_OBJECT  符号与数据对象相关联。
+
+                      STT_FUNC  该符号与一个函数或其他可执行代码相关联。
+
+                      STT_SECTION 符号与段相关联。这种类型的符号表条目主要用于重定位。  通常具有 STB_LOCAL 绑定。
+
+                      STT_FILE  通常，符号的名称会指定与目标文件关联的源文件的名称。文件符号具有 STB_LOCAL 绑定和节索引 SHN_ABS。此符号（如果存在）位于文件的其他 STB_LOCAL 符号前面。
+  
+                      STT_LOPROC  此值直到并包括 STT_HIPROC 为特定于处理器的语义保留。
+
+                      STT_HIPROC  小于等于该值，保留用于特定于处理器的语义。
+
+                      STB_LOCAL   局部符号。这些符号在包含其定义的目标文件的外部不可见。名称相同的局部符号可存在于多个文件中而不会相互干扰。
+
+                      STB_GLOBAL  全局符号。这些符号对于合并的所有目标文件都可见。一个文件的全局符号定义满足另一个文件对相同全局符号的未定义引用。
+
+                      STB_WEAK    弱符号。这些符号与全局符号类似，但其定义具有较低的优先级。
+
+                      STB_LOPROC－STB_HIPROC
+                                  此范围内包含的值保留用于特定于处理器的语义。
+
+                      以下是一些包装和解包绑定和类型属性的宏：
+
+                      ELF32_ST_BIND（info）或ELF64_ST_BIND（info）从 st_info 值中提取绑定。
+
+                      ELF32_ST_TYPE（info）或ELF64_ST_TYPE（info） 从 st_info 值提取类型。
+
+                      ELF32_ST_INFO(bind, type) or ELF64_ST_INFO(bind, type)将绑定和类型转换为 st_info 值。
+
+            st_other  该成员定义符号可见性。
+                      
+                       STV_DEFAULT    默认符号可见性规则。
+                       STV_INTERNAL   特定处理器的隐藏类。
+                       STV_HIDDEN     符号在其他模块中不可用。
+                       STV_PROTECTED  不可抢占，不导出。
+
+                        下面是一些提取可见性类型的宏：
+
+                        ELF32_ST_VISIBILITY(other) or ELF64_ST_VISIBILITY(other)
+
+            st_shndx  所定义的每一个符号表项都与某节有关。此成员包含相关节头表索引。
 
 
 
+            重新定位是使用符号定义连接符号引用的过程。 可重定位文件必须具有描述如何修改其部分内容的信息，从而允许可执行文件和共享对象文件保存
+            流程程序映像的正确信息。重定位项是这些数据。
+
+            不需要加法的重定位结构：
+
+                  typedef struct {
+                       Elf32_Addr r_offset;
+                       uint32_t   r_info;
+                   } Elf32_Rel;
+
+                   typedef struct {
+                       Elf64_Addr r_offset;
+                       uint64_t   r_info;
+                   } Elf64_Rel;
+
+            需要加法的重定位结构：
+
+                  typedef struct {
+                       Elf32_Addr r_offset;
+                       uint32_t   r_info;
+                       int32_t    r_addend;
+                  } Elf32_Rela;
+
+                  typedef struct {
+                       Elf64_Addr r_offset;
+                       uint64_t   r_info;
+                       int64_t    r_addend;
+                  } Elf64_Rela;
+
+             r_offset    此成员给出应用重定位操作的位置。对于可重定位文件，值为从该部分开始到由重定位影响的存储单元的字节偏移量。对于可执行文件或共享对象，该值是受重定位影响的存储单元的虚拟地址。
+
+             r_info     此成员给出了必须进行重定位的符号表索引以及要应用的重定位类型。重定位类型处理器指定。当文本引用重定位条目的重定位类型或符号表索引时，
+             它意味着分别将 ELF[32 | 64]_R_TYPE 或 ELF [32 | 64]_R_SYM 应用于项的 r_info 成员。
+
+             r_addend   此成员指定用于计算要存储到可重定位字段中的值的常量加数。
+
+            动态节包含一系列保存相关动态链接信息的结构。 d_tag成员控制d_un的解释。
+
+                  typedef struct {
+                       Elf32_Sword    d_tag;
+                       union {
+                           Elf32_Word d_val;
+                           Elf32_Addr d_ptr;
+                       } d_un;
+                  } Elf32_Dyn;
+                  extern Elf32_Dyn _DYNAMIC[];
+
+                  typedef struct {
+                       Elf64_Sxword    d_tag;
+                       union {
+                           Elf64_Xword d_val;
+                           Elf64_Addr  d_ptr;
+                       } d_un;
+                  } Elf64_Dyn;
+                  extern Elf64_Dyn _DYNAMIC[];
+
+            d_tag此成员可能具有以下任何值：
+
+                DT_NULL　标记动态部分的结尾
+
+                　DT_NEEDED　将字符串表偏移到所需库的名称
+
+                 DT_PLTRELSZ 　PLT relocs的字节大小
+
+                 DT_PLTGOT 　PLT和/或GOT的地址
+
+                 DT_HASH　　符号哈希表的地址
+
+                 DT_STRTAB　　字符串表的地址
+
+                 DT_SYMTAB　　符号表的地址
+
+                 DT_RELA 　　Rela relocs表的地址
+
+                 DT_RELASZ 　Rela表的字节大小
+
+                 DT_RELAENT Rela表项的字节大小
+
+                 DT_STRSZ　字符串表的字节大小
+
+                 DT_SYMENT　符号表项的字节大小
+
+                 DT_INIT　初始化函数的地址
+
+                 DT_FINI　终止功能的地址
+
+                 DT_SONAME　将字符串表偏移到共享对象的名称
+
+                 DT_RPATH　字符串表偏移到库搜索路径（已弃用）
+
+                 DT_SYMBOLIC　警报链接器在符号的可执行文件之前搜索此共享对象
+
+                 Rel relocs　表的DT_REL地址
+
+                 DT_RELSZ Rel表的字节大小
+
+                 DT_RELENT Rel表条目的字节大小
+
+                 DT_PLTREL PLT引用的reloc类型（Rela或Rel）
+
+                 DT_DEBUG　未定义用于调试
+
+                 DT_TEXTREL　没有这个表示不应该应用于非可写段
+
+                 DT_JMPREL　仅用于PLT的reloc条目的地址
+
+                 DT_BIND_NOW　在将控制权转移到可执行文件之前，指示动态链接器处理所有reloc
+
+                 DT_RUNPATH　字符串表偏移到库搜索路径
+
+                 DT_LOPROC　启动特定于处理器的语义
+
+                 DT_HIPROC　处理器特定语义的结束
+
+       d_val　　该成员表示具有各种解释的整数值。
+
+      　d_ptr　　此成员表示程序虚拟地址。 当解释这些地址时，实际的地址应该是根据原始文件值和内存基址计算。 文件不包含修复这些地址的重定位项。
+
+        _DYNAMIC　　包含.dynamic节中的所有动态结构的数组。 这是由链接器自动填充的。
+
+说明
+      ELF首先出现在　System V　中。ELF格式是　System V　中采用的标准。
+
+      e_phnum，e_shnum和e_strndx的扩展是Linux扩展的。 Sun，BSD和AMD64也支持他们。有关更多信息，请参阅另见。
+
+另见
+      as(1), gdb(1), ld(1), objdump(1), execve(2), core(5)
+
+      Hewlett-Packard，Elf-64对象文件格式。
+
+      Santa Cruz Operation, System V 应用二进制接口。
+
+      UNIX系统实验室，“对象文件”，可执行和链接格式（ELF）。
+
+      Sun Microsystems，链接器和库指南。
+
+      AMD64 ABI草案，系统V应用二进制接口AMD64架构处理器补充。
+
+版权页标记
+      该页面是Linux man-pages项目3.54版本的一部分。 项目描述及报告错误相关的信息，可以在http://www.kernel.org/doc/man-pages/找到。
 
 
 
