@@ -1,0 +1,18 @@
+display_library: sdl
+vgaromimage: file=$BXSHARE/VGABIOS-lgpl-latest
+romimage: file=$BXSHARE/BIOS-bochs-latest
+# address=0xf0000
+floppya: 1_44=fd.img, status=inserted
+megs: 8
+boot: a
+log: ./bochs.out
+keyboard_serial_delay: 200
+# floppy_command_delay: 500
+vga_update_interval: 300000
+# ips: 1000000
+mouse: enabled=0
+private_colormap: enabled=0
+i440fxsupport: enabled=0
+ata0:enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata0-master:type=disk,mode=flat,path=diskc.img,cylinders=40,heads=8,spt=64
+# gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0

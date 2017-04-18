@@ -1,0 +1,5 @@
+digraph function_map {
+rankdir=LR;
+ratio=fill;
+node [style=filled]
+}

@@ -1,0 +1,103 @@
+46c46
+< ALL_TARGETS := fd.img diskc.img
+---
+> ALL_TARGETS := fd.img
+56,59d55
+< 	dma.c floppy.c \
+< 	elf.c blockdev.c ide.c \
+< 	vfs.c pfat.c bitset.c \
+< 	lprog.c \
+66c62
+< KERNEL_ASM_SRCS := lowlevel.asm lspawn.asm
+---
+> KERNEL_ASM_SRCS := lowlevel.asm
+87,102d82
+< # User libc source files.
+< LIBC_C_SRCS := \
+< 	conio.c 
+< 
+< # User libc object files.
+< LIBC_C_OBJS := $(LIBC_C_SRCS:%.c=libc/%.o)
+< 
+< # Generated libc source files
+< GENERATED_LIBC_SRCS := libc/errno.c
+< 
+< 
+< # User program source files.
+< USER_C_SRCS := \
+< 	a.c
+< # User executables
+< USER_PROGS := $(USER_C_SRCS:%.c=user/%.exe)
+110,115d89
+< # Base address of user programs
+< USER_BASE_ADDR := 0x1000
+< 
+< # User program (libc) entry point function
+< USER_ENTRY = $(SYM_PFX)_Entry
+< 
+126c100
+< TARGET_CC := $(TARGET_CC_PREFIX)gcc
+---
+> TARGET_CC := $(TARGET_CC_PREFIX)gcc -m32
+132c106
+< HOST_CC := gcc
+---
+> HOST_CC := gcc -m32
+135c109
+< TARGET_LD := $(TARGET_CC_PREFIX)ld
+---
+> TARGET_LD := $(TARGET_CC_PREFIX)ld -m elf_i386
+168,170d141
+< # Generate C file containing table of error strings from <geekos/errno.h>
+< GENERRS := $(PERL) $(PROJECT_ROOT)/scripts/generrs
+< 
+215,227d185
+< # Compilation of libc source files
+< libc/%.o : libc/%.c
+< 	$(TARGET_CC) -c $(CC_GENERAL_OPTS) $(CC_USER_OPTS) $< -o libc/$*.o
+< 
+< # Compilation of user programs
+< user/%.exe : user/%.c libc/libc.a libc/entry.o
+< 	$(TARGET_CC) -c $(CC_GENERAL_OPTS) $(CC_USER_OPTS) $< -o user/$*.o
+< 	$(TARGET_LD) -o $@ -Ttext $(USER_BASE_ADDR) -e $(USER_ENTRY) \
+< 		libc/entry.o user/$*.o libc/libc.a
+< ifeq ($(NON_ELF_SYSTEM),yes)
+< 	$(TARGET_OBJCOPY) -O elf32-i386 $@ $@
+< endif
+< 
+240,254d197
+< # Augmented floppy image - contains kernel and user executables on PFAT filesystem
+< fd_aug.img : geekos/fd_boot.bin geekos/setup.bin geekos/kernel.bin $(USER_PROGS) $(BUILDFAT)
+< 	$(ZEROFILE) $@ 2880
+< 	$(BUILDFAT) -b geekos/fd_boot.bin $@ geekos/setup.bin geekos/kernel.bin $(USER_PROGS) $(BUILDFAT)
+< 
+< # First hard drive image (10 MB).
+< # This contains a PFAT filesystem with the user programs on it.
+< diskc.img : $(USER_PROGS) $(BUILDFAT)
+< 	$(ZEROFILE) $@ 20480
+< 	$(BUILDFAT) $@ $(USER_PROGS)
+< 
+< # Tool to build PFAT filesystem images
+< $(BUILDFAT) : $(PROJECT_ROOT)/src/tools/buildFat.c $(PROJECT_ROOT)/include/geekos/pfat.h
+< 	$(HOST_CC) $(CC_GENERAL_OPTS) -I$(PROJECT_ROOT)/include $(PROJECT_ROOT)/src/tools/buildFat.c -o $@
+< 
+273c216
+< # Loadable (flat) kernel image.
+---
+> # Loadable (flat) kernel image. //-ms32
+284,293d226
+< # C library for user mode programs
+< libc/libc.a : $(LIBC_C_OBJS) libc/errno.o $(COMMON_C_OBJS)
+< 	$(TARGET_AR) ruv $@ $(LIBC_C_OBJS) libc/errno.o $(COMMON_C_OBJS)
+< 	$(TARGET_RANLIB) $@
+< 
+< # Source file containing the table of error strings for each error code.
+< # This is derived automatically from the comments in <geekos/errno.h>.
+< libc/errno.c : $(PROJECT_ROOT)/include/geekos/errno.h $(PROJECT_ROOT)/scripts/generrs
+< 	$(GENERRS) $(PROJECT_ROOT)/include/geekos/errno.h > $@
+< 
+307,310d239
+< 	$(TARGET_CC) -M $(CC_GENERAL_OPTS) $(CC_USER_OPTS) \
+< 		$(LIBC_C_SRCS:%.c=$(PROJECT_ROOT)/src/libc/%.c) libc/errno.c \
+< 		| $(PERL) -n -e 's,^(\S),libc/$$1,;print' \
+< 		>> depend.mak

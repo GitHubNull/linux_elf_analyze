@@ -1,0 +1,94 @@
+./src/libc/curses.c:23: * TODO:
+./src/geekos/uservm.c:25:// TODO: Add private functions
+./src/geekos/uservm.c:44:    TODO("Destroy User_Context data structure after process exits");
+./src/geekos/uservm.c:79:    TODO("Load user program into address space");
+./src/geekos/uservm.c:106:    TODO("Copy user data to kernel buffer");
+./src/geekos/uservm.c:121:    TODO("Copy kernel data to user buffer");
+./src/geekos/uservm.c:134:    TODO("Switch_To_Address_Space() using paging");
+./src/geekos/floppy.c:39: * TODO:
+./src/geekos/floppy.c:155:    INVALID_FLOPPY_TYPE,	 /* TODO: 360K 5.25" */
+./src/geekos/floppy.c:156:    INVALID_FLOPPY_TYPE,	 /* TODO: 1.2M 5.25" */
+./src/geekos/floppy.c:157:    INVALID_FLOPPY_TYPE,	 /* TODO: 720K 3.5" */
+./src/geekos/floppy.c:159:    INVALID_FLOPPY_TYPE,	 /* TODO: 2.88M 3.5" */
+./src/geekos/floppy.c:411:     * TODO: we might want to support drives other than 0 eventually
+./src/geekos/timer.c:200:     * TODO: reprogram the timer to set the frequency.
+./src/geekos/idt.c:19: * TODO: dynamically allocate this?
+./src/geekos/trap.c:17: * TODO: need to add handlers for other exceptions (such as bounds
+./src/geekos/keyboard.c:25: * TODO list:
+./src/geekos/userseg.c:40:/* TODO: Implement
+./src/geekos/userseg.c:76:    TODO("Destroy a User_Context");
+./src/geekos/userseg.c:112:    TODO("Load a user executable into a user memory space using segmentation");
+./src/geekos/userseg.c:138:    TODO("Copy memory from user buffer to kernel buffer");
+./src/geekos/userseg.c:159:    TODO("Copy memory from kernel buffer to user buffer");
+./src/geekos/userseg.c:174:    TODO("Switch to user address space using segmentation/LDT");
+./src/geekos/main.c:114:    TODO("Spawn the init process");
+./src/geekos/pipefs.c:31:    TODO("Read from pipe");
+./src/geekos/pipefs.c:40:    TODO("Write to pipe");
+./src/geekos/pipefs.c:48:    TODO("Close a pipe");
+./src/geekos/pipefs.c:56:    TODO("Clone a pipe");
+./src/geekos/pipefs.c:96:     * TODO: you should allocate a data structure for managing the
+./src/geekos/user.c:105:    TODO("Spawn a process by reading an executable from a filesystem");
+./src/geekos/user.c:124:    TODO("Switch to a new user address space, if necessary");
+./src/geekos/kthread.c:318:    TODO("Create a new thread to execute in user mode");
+./src/geekos/kthread.c:520:    TODO("Start user thread");
+./src/geekos/kthread.c:566:    TODO("Find a runnable thread from run queues");
+./src/geekos/kthread.c:694:     * TODO: we could remove the requirement that the caller
+./src/geekos/paging.c:124:    TODO("Build initial kernel page directory and page tables");
+./src/geekos/paging.c:134:    TODO("Initialize paging file data structures");
+./src/geekos/paging.c:146:    TODO("Find free page in paging file");
+./src/geekos/paging.c:157:    TODO("Free page in paging file");
+./src/geekos/paging.c:172:    TODO("Write page data to paging file");
+./src/geekos/paging.c:188:    TODO("Read page data from paging file");
+./src/geekos/pfat.c:33: * TODO:
+./src/geekos/pfat.c:552:    /* TODO: verify that paging file is contiguous */
+./src/geekos/gosfs.c:34:    TODO("GeekOS filesystem FStat operation");
+./src/geekos/gosfs.c:42:    TODO("GeekOS filesystem read operation");
+./src/geekos/gosfs.c:50:    TODO("GeekOS filesystem write operation");
+./src/geekos/gosfs.c:58:    TODO("GeekOS filesystem seek operation");
+./src/geekos/gosfs.c:66:    TODO("GeekOS filesystem close operation");
+./src/geekos/gosfs.c:77:    TODO("GeekOS filesystem clone operation");
+./src/geekos/gosfs.c:95:    TODO("GeekOS filesystem FStat directory operation");
+./src/geekos/gosfs.c:103:    TODO("GeekOS filesystem Close directory operation");
+./src/geekos/gosfs.c:111:    TODO("GeekOS filesystem Read_Entry operation");
+./src/geekos/gosfs.c:128:    TODO("GeekOS filesystem open operation");
+./src/geekos/gosfs.c:136:    TODO("GeekOS filesystem create directory operation");
+./src/geekos/gosfs.c:144:    TODO("GeekOS filesystem open directory operation");
+./src/geekos/gosfs.c:152:    TODO("GeekOS filesystem delete operation");
+./src/geekos/gosfs.c:160:    TODO("GeekOS filesystem stat operation");
+./src/geekos/gosfs.c:169:    TODO("GeekOS filesystem sync operation");
+./src/geekos/gosfs.c:183:    TODO("GeekOS filesystem format operation");
+./src/geekos/gosfs.c:188:    TODO("GeekOS filesystem mount operation");
+./src/geekos/elf.c:35:    TODO("Parse an ELF executable image");
+./src/geekos/syscall.c:49:    TODO("Exit system call");
+./src/geekos/syscall.c:61:    TODO("PrintString system call");
+./src/geekos/syscall.c:73:    TODO("GetKey system call");
+./src/geekos/syscall.c:84:    TODO("SetAttr system call");
+./src/geekos/syscall.c:96:    TODO("GetCursor system call");
+./src/geekos/syscall.c:108:    TODO("PutCursor system call");
+./src/geekos/syscall.c:129:    TODO("Spawn system call");
+./src/geekos/syscall.c:141:    TODO("Wait system call");
+./src/geekos/syscall.c:152:    TODO("GetPID system call");
+./src/geekos/syscall.c:164:    TODO("SetSchedulingPolicy system call");
+./src/geekos/syscall.c:176:    TODO("GetTimeOfDay system call");
+./src/geekos/syscall.c:189:    TODO("CreateSemaphore system call");
+./src/geekos/syscall.c:203:    TODO("P (semaphore acquire) system call");
+./src/geekos/syscall.c:215:    TODO("V (semaphore release) system call");
+./src/geekos/syscall.c:227:    TODO("DestroySemaphore system call");
+./src/geekos/syscall.c:262:    TODO("Mount system call");
+./src/geekos/syscall.c:281:    TODO("Open system call");
+./src/geekos/syscall.c:295:    TODO("Open directory system call");
+./src/geekos/syscall.c:306:    TODO("Close system call");
+./src/geekos/syscall.c:319:    TODO("Delete system call");
+./src/geekos/syscall.c:334:    TODO("Read system call");
+./src/geekos/syscall.c:346:    TODO("ReadEntry system call");
+./src/geekos/syscall.c:361:    TODO("Write system call");
+./src/geekos/syscall.c:375:    TODO("Stat system call");
+./src/geekos/syscall.c:388:    TODO("FStat system call");
+./src/geekos/syscall.c:401:    TODO("Seek system call");
+./src/geekos/syscall.c:414:    TODO("CreateDir system call");
+./src/geekos/syscall.c:424:    TODO("Sync system call");
+./src/geekos/syscall.c:438:    TODO("Format system call");
+./src/geekos/syscall.c:443:    TODO("CreatePipe system call");
+./src/geekos/consfs.c:28:    TODO("Read from console");
+./src/geekos/consfs.c:37:    TODO("Write to console");
+./src/geekos/consfs.c:46:    TODO("Close console input or output");
