@@ -4,10 +4,10 @@
 
 #include <conio.h>
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
     int i;
-    Print_String("I am the b program\n");
+    Print_String("I am a baby\tb\n");
     for (i = 0; i < argc; ++i) {
 	Print("Arg %d is %s\n", i,argv[i]);
     }

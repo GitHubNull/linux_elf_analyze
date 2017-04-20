@@ -98,36 +98,56 @@ int Spawn(const char *program, const char *command, struct Kernel_Thread **pThre
      * If all goes well, store the pointer to the new thread in
      * pThread and return 0.  Otherwise, return an error code.
      */
-    //TODO("Spawn a process by reading an executable from a filesystem");
-    int rc;
-    char *exeFileData = 0;
-    ulong_t exeFileLength;
-    struct User_Context *userContext = 0;
-    struct Kernel_Thread *process = 0;
-    struct Exe_Format exeFormat;
-    if ((rc = Read_Fully(program, (void**) &exeFileData, &exeFileLength)) != 0 ||
-        (rc = Parse_ELF_Executable(exeFileData, exeFileLength, &exeFormat)) != 0 ||
-        (rc = Load_User_Program(exeFileData, exeFileLength, &exeFormat, command, &userContext)) != 0)
-        goto fail;
-    Free(exeFileData);
-    exeFileData = 0;
-    /* 开始用户进程 */
-    process = Start_User_Thread(userContext, false);
-    if (process != 0) {
-        KASSERT(process->refCount == 2);
-    /* 返回核心进程的指针 */
-        *pThread = process;
-        rc = process->pid;
-    } else{
-        rc = ENOMEM;
-    }
-    return rc;
-    fail:
-    if (exeFileData != 0)
-        Free(exeFileData);
-    if (userContext != 0)
-        Destroy_User_Context(userContext);
-    return rc;
+	// TODO("Spawn a process by reading an executable from a filesystem");
+ 	int retval;
+	char *exeFileData = 0;
+	ulong_t exeFileLength;
+	struct User_Context *UserContext = 0;
+	struct Exe_Format exeFormat;
+	struct Kernel_Thread * thread;
+
+	if ((retval = Read_Fully(program,(void **) &exeFileData, &exeFileLength)) != 0)
+	{
+		Print("Failed to read file %s\n", program);
+		goto fail;
+	}
+
+	if ((retval = Parse_ELF_Executable(exeFileData, exeFileLength, &exeFormat)) != 0)
+	{
+		Print("Failed to parse ELF file %s\n", program);
+		goto fail;
+	}
+
+	if ((retval = Load_User_Program(exeFileData, exeFileLength, &exeFormat, command, &UserContext)) != 0)
+	{
+		Print("Failed to Load User Program %s\n", program);
+		goto fail;
+	}
+
+	Free(exeFileData);
+	exeFileData = 0;
+
+	thread = Start_User_Thread(UserContext, false);
+
+	if (thread != 0)
+	{
+		KASSERT(thread->refCount == 2);
+		*pThread = thread;
+		retval = thread->pid;
+	}
+	else 
+	{
+		retval = ENOMEM;
+	}
+	
+	return retval;
+
+fail:
+	if (exeFileData != 0)
+		Free(exeFileData);
+	if (UserContext != 0)
+		Destroy_User_Context(UserContext);
+	return retval;
 }
 
 /*
@@ -146,14 +166,22 @@ void Switch_To_User_Context(struct Kernel_Thread* kthread, struct Interrupt_Stat
      * the Set_Kernel_Stack_Pointer() and Switch_To_Address_Space()
      * functions.
      */
-    //TODO("Switch to a new user address space, if necessary");
-    static struct User_Context* s_currentUserContext; /* last user context used */
-    extern int userDebug;
+     // TODO("Switch to a new user address space, if necessary");
+	// struct User_Context * UserContext = kthread->userContext;
+
+	// if (UserContext == 0)
+	// {
+	// 	return ;
+	// }
+
+	// Switch_To_Address_Space(UserContext);
+	// Set_Kernel_Stack_Pointer((ulong_t)(kthread->stackPage + PAGE_SIZE));
+	static struct User_Context* s_currentUserContext; /* last user context used */
     struct User_Context* userContext = kthread->userContext;
     KASSERT(!Interrupts_Enabled());
     if (userContext == 0) {
     /* 核心态进程，无需改变地址空间. */
-    return;
+        return;
     }
     if (userContext != s_currentUserContext) {
         ulong_t esp0;

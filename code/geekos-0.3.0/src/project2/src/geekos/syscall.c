@@ -3,7 +3,7 @@
  * Copyright (c) 2003, Jeffrey K. Hollingsworth <hollings@cs.umd.edu>
  * Copyright (c) 2003,2004 David Hovemeyer <daveho@cs.umd.edu>
  * $Revision: 1.59 $
- *
+ * 
  * This is free software.  You are permitted to use,
  * redistribute, and modify it as specified in the file "COPYING".
  */
@@ -20,6 +20,40 @@
 #include <geekos/user.h>
 #include <geekos/timer.h>
 #include <geekos/vfs.h>
+
+
+
+static int Copy_User_String(ulong_t uaddr, ulong_t len, ulong_t maxLen, char **pStr)
+{
+    int rc = 0;
+    char *str;
+
+    /* Ensure that string isn't too long. */
+    if (len > maxLen)
+	   return EINVALID;
+
+    /* Allocate space for the string. */
+    str = (char*) Malloc(len+1);
+    if (str == 0) {
+    	rc = ENOMEM;
+    	goto done;
+    }
+
+    /* Copy data from user space. */
+    if (!Copy_From_User(str, uaddr, len)) {
+    	rc = EINVALID;
+    	Free(str);
+    	goto done;
+    }
+    str[len] = '\0';
+
+    /* Success! */
+    *pStr = str;
+
+done:
+    return rc;
+}
+
 
 /*
  * Null system call.
@@ -46,28 +80,7 @@ static int Sys_Null(struct Interrupt_State* state)
  */
 static int Sys_Exit(struct Interrupt_State* state)
 {
-    //TODO("Exit system call");
     Exit(state->ebx);
-}
-
-static int Copy_User_String(ulong_t uaddr, ulong_t len, ulong_t maxLen, char **pStr) {
-    int rc = 0;
-    char *str;
-    if (len > maxLen)
-        return EINVALID; //超过最大长度
-
-    str = (char*) Malloc(len+1); //为字符串分配空间
-    if (0 == str)
-        rc = ENOMEM; goto fail;
-    if (!Copy_From_User(str, uaddr, len)){
-        //从用户空间中复制数据
-        rc = EINVALID; Free(str);
-        goto fail;
-    }
-    str[len] = '\0'; //成功
-    *pStr = str;
-fail:
-    return rc;
 }
 
 /*
@@ -79,20 +92,22 @@ fail:
  */
 static int Sys_PrintString(struct Interrupt_State* state)
 {
-    //TODO("PrintString system call");
     int rc = 0;
     uint_t length = state->ecx;
     uchar_t* buf = 0;
+
     if (length > 0) {
-        /* Copy string into kernel. */
-        if ((rc = Copy_User_String(state->ebx, length, 1023, (char**) &buf)) != 0)
-            goto done;
-        /* Write to console. */
-        Put_Buf((char*)buf, (ulong_t)length);
+	/* Copy string into kernel. */
+	if ((rc = Copy_User_String(state->ebx, length, 1023, (char**) &buf)) != 0)
+	    goto done;
+
+	/* Write to console. */
+	Put_Buf((const char*)buf, length);
     }
+
 done:
     if (buf != 0)
-        Free(buf);
+	Free(buf);
     return rc;
 }
 
@@ -105,7 +120,6 @@ done:
  */
 static int Sys_GetKey(struct Interrupt_State* state)
 {
-    //TODO("GetKey system call");
     return Wait_For_Key();
 }
 
@@ -117,7 +131,6 @@ static int Sys_GetKey(struct Interrupt_State* state)
  */
 static int Sys_SetAttr(struct Interrupt_State* state)
 {
-    //TODO("SetAttr system call");
     Set_Current_Attr((uchar_t) state->ebx);
     return 0;
 }
@@ -131,12 +144,11 @@ static int Sys_SetAttr(struct Interrupt_State* state)
  */
 static int Sys_GetCursor(struct Interrupt_State* state)
 {
-    //TODO("GetCursor system call");
     int row, col;
     Get_Cursor(&row, &col);
     if (!Copy_To_User(state->ebx, &row, sizeof(int)) ||
-            !Copy_To_User(state->ecx, &col, sizeof(int)))
-        return -1;
+	       !Copy_To_User(state->ecx, &col, sizeof(int)))
+	return -1;
     return 0;
 }
 
@@ -149,7 +161,6 @@ static int Sys_GetCursor(struct Interrupt_State* state)
  */
 static int Sys_PutCursor(struct Interrupt_State* state)
 {
-    // TODO("PutCursor system call");
     return Put_Cursor(state->ebx, state->ecx) ? 0 : -1;
 }
 
@@ -164,27 +175,34 @@ static int Sys_PutCursor(struct Interrupt_State* state)
  */
 static int Sys_Spawn(struct Interrupt_State* state)
 {
-    // TODO("Spawn system call");
     int rc;
     char *program = 0;
     char *command = 0;
     struct Kernel_Thread *process;
+
     /* Copy program name and command from user space. */
     if ((rc = Copy_User_String(state->ebx, state->ecx, VFS_MAX_PATH_LEN, &program)) != 0 ||
-            (rc = Copy_User_String(state->edx, state->esi, 1023, &command)) != 0)
-        goto done;
+	       (rc = Copy_User_String(state->edx, state->esi, 1023, &command)) != 0)
+		goto done;
+
+    /*
+     * Now that we have collected the program name and command string
+     * from user space, we can try to actually spawn the process.
+     */
     Enable_Interrupts();
     rc = Spawn(program, command, &process);
     if (rc == 0) {
-        KASSERT(process != 0);
-        rc = process->pid;
+    	KASSERT(process != 0);
+    	rc = process->pid;
     }
+
     Disable_Interrupts();
+
 done:
     if (program != 0)
-        Free(program);
+	Free(program);
     if (command != 0)
-        Free(command);
+	Free(command);
     return rc;
 }
 
@@ -197,16 +215,18 @@ done:
  */
 static int Sys_Wait(struct Interrupt_State* state)
 {
-    // TODO("Wait system call");
     int exitCode;
     struct Kernel_Thread *kthread = Lookup_Thread(state->ebx);
     if (kthread == 0)
-        return -12;
+	return -12;
+
     Enable_Interrupts();
     exitCode = Join(kthread);
     Disable_Interrupts();
+
     return exitCode;
 }
+
 
 /*
  * Get pid (process id) of current thread.
@@ -216,7 +236,6 @@ static int Sys_Wait(struct Interrupt_State* state)
  */
 static int Sys_GetPID(struct Interrupt_State* state)
 {
-    // TODO("GetPID system call");
     return g_currentThread->pid;
 }
 
@@ -235,6 +254,12 @@ const Syscall g_syscallTable[] = {
     Sys_Spawn,
     Sys_Wait,
     Sys_GetPID,
+    // Sys_Kill,
+    // Sys_PS,
+    // Sys_Signal,
+    // Sys_RegDeliver,
+    // Sys_ReturnSignal,
+    // Sys_WaitNoPID,
 };
 
 /*

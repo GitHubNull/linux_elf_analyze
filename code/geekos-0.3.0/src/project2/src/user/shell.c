@@ -279,5 +279,3 @@ void Spawn_Single_Command(struct Process procList[], int nproc, const char *path
 	    Print("Exit code was %d\n", exitCode);
     }
 }
-
-

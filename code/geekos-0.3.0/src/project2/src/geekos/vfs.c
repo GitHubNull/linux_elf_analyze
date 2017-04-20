@@ -516,9 +516,9 @@ int FStat(struct File *file, struct VFS_File_Stat *stat)
 int Read(struct File *file, void *buf, ulong_t len)
 {
     if (file->ops->Read == 0)
-	return EUNSUPPORTED;
+	   return EUNSUPPORTED;
     else
-	return file->ops->Read(file, buf, len);
+        return file->ops->Read(file, buf, len);
 }
 
 /*
@@ -567,17 +567,16 @@ int Read_Fully(const char *path, void **pBuffer, ulong_t *pLen)
 {
     struct File *file = 0;
     struct VFS_File_Stat stat;
-    int rc;
+    int retval = 0;
     char *buf = 0;
     int numBytesRead;
 
-    if ((rc = Stat(path, &stat)) < 0 || (rc = Open(path, O_READ, &file)) < 0)
+    if ((retval = Stat(path, &stat)) < 0 || (retval = Open(path, O_READ, &file)) < 0)
 	goto fail;
     if (stat.size < 0) {
-	rc = ENOTFOUND;
+	retval = ENOTFOUND;
 	goto fail;
     }
-
     buf = (char*) Malloc(stat.size);
     if (buf == 0)
 	goto memfail;
@@ -585,10 +584,11 @@ int Read_Fully(const char *path, void **pBuffer, ulong_t *pLen)
     /* Read until buffer is full */
     numBytesRead = 0;
     while (numBytesRead < stat.size) {
-	rc = Read(file, buf + numBytesRead, stat.size - numBytesRead);
-	if (rc < 0)
-	    goto fail;
-	numBytesRead += rc;
+    	retval = Read(file, buf + numBytesRead, stat.size - numBytesRead);
+    	if (retval < 0){
+    	    goto fail;
+        }
+    	numBytesRead += retval;
     }
 
     /* Success! */
@@ -598,13 +598,13 @@ int Read_Fully(const char *path, void **pBuffer, ulong_t *pLen)
     return 0;
 
 memfail:
-    rc = ENOMEM;
+    retval = ENOMEM;
 fail:
     if (file != 0)
 	Close(file);
     if (buf != 0)
 	Free(buf);
-    return rc;
+    return retval;
 }
 
 /*

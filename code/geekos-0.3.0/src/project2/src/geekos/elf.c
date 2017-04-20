@@ -28,25 +28,80 @@
  *   and entry address; to be filled in
  * @return 0 if successful, < 0 on error
  */
+ #if 0	// not used here!--Late Lee
 int Parse_ELF_Executable(char *exeFileData, ulong_t exeFileLength,
     struct Exe_Format *exeFormat)
 {
-    //TODO("Parse an ELF executable image");
-    int i = 0;  
-    elfHeader *elf_head = (elfHeader *)exeFileData;
-    programHeader *phdr = (programHeader *)(exeFileData + elf_head->phoff);  
-    struct Exe_Segment *segment = exeFormat->segmentList;
-    for (i = 0; i < elf_head->phnum; i++) {
-        segment->offsetInFile = phdr->offset;
-        segment->lengthInFile = phdr->fileSize;
-        segment->startAddress = phdr->vaddr;
-        segment->sizeInMemory = phdr->memSize;
-        phdr++;
-        segment++;
+    elfHeader *elf_header;
+    programHeader *phdr;
+    int i;
+
+    elf_header= (elfHeader *) exeFileData;
+
+    /*
+     * FIXME: when checking offsets, we really ought to be
+     * checking overflow cases.  Need to use functions from
+     * range.h (which needs to be implemented, too)
+     */
+
+    if (exeFileLength < sizeof(elfHeader) ||
+	strncmp(exeFileData, "\x7F""ELF", 4) != 0) {
+	return ENOEXEC;
     }
-    
-    exeFormat->numSegments = elf_head->phnum;
-    exeFormat->entryAddr = elf_head->entry;
+
+    if (elf_header->phnum > EXE_MAX_SEGMENTS) {
+	return ENOEXEC;
+    }
+
+    if (exeFileLength < elf_header->phoff + (elf_header->phnum * sizeof(programHeader))) {
+	return ENOEXEC;
+    }
+
+    exeFormat->numSegments = elf_header->phnum;
+    exeFormat->entryAddr = elf_header->entry;
+
+    phdr = (programHeader *) (exeFileData + elf_header->phoff);
+    for (i = 0; i < elf_header->phnum; ++i) {
+	struct Exe_Segment *segment = &exeFormat->segmentList[i];
+
+	/*
+	 * Fill in segment offset, length, address
+	 * FIXME: should check that segments are valid
+	 */
+	segment->offsetInFile = phdr[i].offset;
+	segment->lengthInFile = phdr[i].fileSize;
+	segment->startAddress = phdr[i].vaddr;
+	segment->sizeInMemory = phdr[i].memSize;
+
+	if (segment->lengthInFile > segment->sizeInMemory) {
+	    return ENOEXEC;
+	}
+
+    }
+
+    /* Groovy */
     return 0;
 }
+ #endif
 
+// copy from P1 ^_^
+ int Parse_ELF_Executable(char *exeFileData, ulong_t exeFileLength,
+    struct Exe_Format *exeFormat)
+{
+  int i = 0;  
+  elfHeader *elf_head = (elfHeader *)exeFileData;
+  programHeader *phdr = (programHeader *)(exeFileData + elf_head->phoff);  
+  struct Exe_Segment *segment = exeFormat->segmentList;
+  for (i = 0; i < elf_head->phnum; i++) {
+      segment->offsetInFile = phdr->offset;
+      segment->lengthInFile = phdr->fileSize;
+      segment->startAddress = phdr->vaddr;
+      segment->sizeInMemory = phdr->memSize;
+      phdr++;
+      segment++;
+  }
+
+  exeFormat->numSegments = elf_head->phnum;
+  exeFormat->entryAddr = elf_head->entry;
+  return 0;
+}

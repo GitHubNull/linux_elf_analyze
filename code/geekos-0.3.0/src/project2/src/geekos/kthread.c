@@ -2,7 +2,7 @@
  * Kernel threads
  * Copyright (c) 2001,2003 David H. Hovemeyer <daveho@cs.umd.edu>
  * $Revision: 1.49 $
- *
+ * 
  * This is free software.  You are permitted to use,
  * redistribute, and modify it as specified in the file "COPYING".
  */
@@ -117,7 +117,7 @@ static struct Kernel_Thread* Create_Thread(int priority, bool detached)
      */
     kthread = Alloc_Page();
     if (kthread != 0)
-        stackPage = Alloc_Page();
+        stackPage = Alloc_Page();    
 
     /* Make sure that the memory allocations succeeded. */
     if (kthread == 0)
@@ -313,30 +313,47 @@ static void Setup_Kernel_Thread(
      * - The esi register should contain the address of
      *   the argument block
      */
-    //TODO("Create a new thread to execute in user mode");
-    //extern int userDebug;
-    ulong_t eflags = EFLAGS_IF;
-    ushort_t csSelector=userContext->csSelector;
-    ushort_t dsSelector=userContext->dsSelector;
+    unsigned csSelector = userContext->csSelector;
+    unsigned dsSelector = userContext->dsSelector;
+
     Attach_User_Context(kthread, userContext);
-    Push(kthread, dsSelector);
-    Push(kthread, userContext->stackPointerAddr);
-    Push(kthread, eflags);
+
+    /*
+     * Make the thread's stack look like it was interrupted
+     * while in user mode.
+     */
+
+    /* Stack segment and stack pointer within user mode. */
+    Push(kthread, dsSelector);  /* user ss */
+    Push(kthread, userContext->stackPointerAddr);  /* user esp */
+
+    /* eflags, cs, eip */
+    Push(kthread, EFLAGS_IF);
     Push(kthread, csSelector);
     Push(kthread, userContext->entryAddr);
+
+    /* Push fake error code and interrupt number. */
     Push(kthread, 0);
     Push(kthread, 0);
-    Push(kthread, 0); /* eax */
-    Push(kthread, 0); /* ebx */
-    Push(kthread, 0); /* edx */
-    Push(kthread, 0); /* edx */
-    Push(kthread, userContext->argBlockAddr); /* esi */
-    Push(kthread, 0); /* edi */
-    Push(kthread, 0); /* ebp */
-    Push(kthread, dsSelector); /* ds */
-    Push(kthread, dsSelector); /* es */
-    Push(kthread, dsSelector); /* fs */
-    Push(kthread, dsSelector); /* gs */
+
+    /*
+     * Push initial values for general-purpose registers.
+     * The only important register is esi, which we use to
+     * pass the address of the argument block.
+     */
+    Push(kthread, 0);  /* eax */
+    Push(kthread, 0);  /* ebx */
+    Push(kthread, 0);  /* edx */
+    Push(kthread, 0);  /* edx */
+    Push(kthread, userContext->argBlockAddr);  /* esi */
+    Push(kthread, 0);  /* edi */
+    Push(kthread, 0);  /* ebp */
+
+    /* Push initial values for the data segment registers. */
+    Push(kthread, dsSelector);  /* ds */
+    Push(kthread, dsSelector);  /* es */
+    Push(kthread, dsSelector);  /* fs */
+    Push(kthread, dsSelector);  /* gs */
 }
 
 
@@ -418,7 +435,7 @@ static __inline__ struct Kernel_Thread* Find_Best(struct Thread_Queue* queue)
  * Acquires pointer to thread-local data from the current thread
  * indexed by the given key.  Assumes interrupts are off.
  */
-static __inline__ const void** Get_Tlocal_Pointer(tlocal_key_t k)
+static __inline__ const void** Get_Tlocal_Pointer(tlocal_key_t k) 
 {
     struct Kernel_Thread* current = g_currentThread;
 
@@ -439,6 +456,7 @@ static void Tlocal_Exit(struct Kernel_Thread* curr) {
     int i, j, called = 0;
 
     KASSERT(!Interrupts_Enabled());
+
     for (j = 0; j<MIN_DESTRUCTOR_ITERATIONS; j++) {
 
         for (i = 0; i<MAX_TLOCAL_KEYS; i++) {
@@ -537,13 +555,14 @@ Start_User_Thread(struct User_Context* userContext, bool detached)
      * - Call Make_Runnable_Atomic() to schedule the process
      *   for execution
      */
-    //TODO("Start user thread");
-    struct Kernel_Thread* kthread = Create_Thread(PRIORITY_USER, detached);
-    if (kthread != 0) {
-        Setup_User_Thread(kthread, userContext);
-        Make_Runnable_Atomic(kthread);
-    }
-    return kthread;
+	struct Kernel_Thread * kthread = Create_Thread(PRIORITY_USER,detached);
+	if (kthread != 0)
+	{
+		Setup_User_Thread(kthread,userContext);
+		Make_Runnable_Atomic(kthread);
+	}
+
+	return kthread;
 }
 
 /*
@@ -588,9 +607,9 @@ struct Kernel_Thread* Get_Next_Runnable(void)
     KASSERT(best != 0);
     Remove_Thread(&s_runQueue, best);
 
-/*
- *    Print("Scheduling %x\n", best);
- */
+
+//     Print("Scheduling %x\n", best);
+ 
     return best;
 }
 
@@ -645,7 +664,7 @@ void Exit(int exitCode)
     struct Kernel_Thread* current = g_currentThread;
 
     if (Interrupts_Enabled())
-        Disable_Interrupts();
+	Disable_Interrupts();
 
     /* Thread is dead */
     current->exitCode = exitCode;
@@ -807,7 +826,7 @@ void Wake_Up_One(struct Thread_Queue* waitQueue)
 /*
  * Allocate a key for accessing thread-local data.
  */
-int Tlocal_Create(tlocal_key_t *key, tlocal_destructor_t destructor)
+int Tlocal_Create(tlocal_key_t *key, tlocal_destructor_t destructor) 
 {
     KASSERT(key);
 
@@ -818,14 +837,14 @@ int Tlocal_Create(tlocal_key_t *key, tlocal_destructor_t destructor)
     *key = s_tlocalKeyCounter++;
 
     End_Int_Atomic(iflag);
-
+  
     return 0;
 }
 
 /*
  * Store a value for a thread-local item
  */
-void Tlocal_Put(tlocal_key_t k, const void *v)
+void Tlocal_Put(tlocal_key_t k, const void *v) 
 {
     const void **pv;
 
@@ -838,7 +857,7 @@ void Tlocal_Put(tlocal_key_t k, const void *v)
 /*
  * Acquire a thread-local value
  */
-void *Tlocal_Get(tlocal_key_t k)
+void *Tlocal_Get(tlocal_key_t k) 
 {
     const void **pv;
 

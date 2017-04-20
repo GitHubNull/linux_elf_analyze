@@ -18,13 +18,10 @@ void Exit(int exitCode);
  */
 void _Entry(void)
 {
-	//__asm__ __volatile__ ("add $0x1c, %esp");   
-  	//__asm__ __volatile__ ("lret");
     struct Argument_Block *argBlock;
 
     /* The argument block pointer is in the ESI register. */
     __asm__ __volatile__ ("movl %%esi, %0" : "=r" (argBlock));
-    //__asm__ __volatile__ ("movl %0, %%esi" : "=r" (argBlock));
 
     /* Call main(), and then exit with whatever value it returns. */
     Exit(main(argBlock->argc, argBlock->argv));

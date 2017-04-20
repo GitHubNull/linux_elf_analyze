@@ -482,7 +482,7 @@ static int Floppy_Transfer(int direction, int driveNum, int blockNum, char *buf)
     LBA_To_CHS(&s_driveTable[driveNum], blockNum, &cylinder, &head, &sector);
 
     if (!Floppy_Seek(driveNum, cylinder, head))
-	   return -1;
+	return -1;
 
     Disable_Interrupts();
 
@@ -499,9 +499,9 @@ static int Floppy_Transfer(int direction, int driveNum, int blockNum, char *buf)
     Micro_Delay(8000);
 
     if (direction == FLOPPY_READ)
-	   command = FDC_COMMAND_READ_SECTOR | FDC_MFM | FDC_SKIP_DELETED;
+	command = FDC_COMMAND_READ_SECTOR | FDC_MFM | FDC_SKIP_DELETED;
     else
-	   command = FDC_COMMAND_WRITE_SECTOR | FDC_MFM;
+	command = FDC_COMMAND_WRITE_SECTOR | FDC_MFM;
  
     /* Issue the command */
     Floppy_Out(command);

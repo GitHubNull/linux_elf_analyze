@@ -42,7 +42,7 @@ geekos/screen.o: ../src/geekos/screen.c /usr/include/stdc-predef.h \
 geekos/timer.o: ../src/geekos/timer.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
- /usr/include/limits.h /usr/include/features.h \
+ /usr/include/limits.h ../include/features.h \
  /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
@@ -179,7 +179,7 @@ geekos/vfs.o: ../src/geekos/vfs.c /usr/include/stdc-predef.h \
 geekos/pfat.o: ../src/geekos/pfat.c /usr/include/stdc-predef.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
- /usr/include/limits.h /usr/include/features.h \
+ /usr/include/limits.h ../include/features.h \
  /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \
@@ -240,7 +240,7 @@ common/fmtout.o: ../src/common/fmtout.c /usr/include/stdc-predef.h \
  ../include/geekos/string.h ../include/geekos/../libc/string.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/limits.h \
  /usr/lib/gcc/i686-linux-gnu/4.8/include-fixed/syslimits.h \
- /usr/include/limits.h /usr/include/features.h \
+ /usr/include/limits.h ../include/features.h \
  /usr/include/i386-linux-gnu/sys/cdefs.h \
  /usr/include/i386-linux-gnu/bits/wordsize.h \
  /usr/include/i386-linux-gnu/gnu/stubs.h \

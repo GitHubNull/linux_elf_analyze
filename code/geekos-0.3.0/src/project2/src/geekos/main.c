@@ -75,11 +75,8 @@ void Main(struct Boot_Info* bootInfo)
     Mount_Root_Filesystem();
 
     Set_Current_Attr(ATTRIB(BLACK, GREEN|BRIGHT));
-    Print("Welcome to GeekOS!\n");
+    Print("\t\tWelcome to GeekOS!\n");
     Set_Current_Attr(ATTRIB(BLACK, GRAY));
-
-
-
 
     Spawn_Init_Process();
 
@@ -98,14 +95,22 @@ static void Mount_Root_Filesystem(void)
 
 }
 
-
-
-
-
-
 static void Spawn_Init_Process(void)
 {
-    // TODO("Spawn the init process");
-    struct Kernel_Thread* pThread;
-    Spawn("/c/shell.exe","/c/shell.exe",&pThread);
+	//TODO("Spawn the init process");
+	struct Kernel_Thread * pThread;
+	int result;
+
+	// call shell.exe first!!!
+	// you can try others such as:/c/b.exe etc.--Late Lee
+	result = Spawn("/c/shell.exe", "/c/shell.exe", &pThread);
+
+	if (result <= 0)
+		Print("Failed to spawn init process : error code = %d\n", result);
+	
+	else
+	{
+		int exitCode = Join(pThread);
+		Print("Init process exited with code %d\n", exitCode);
+	}
 }

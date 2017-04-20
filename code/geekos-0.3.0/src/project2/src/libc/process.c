@@ -56,37 +56,37 @@ int Spawn_With_Path(const char *program, const char *command,
 
     if (pid == ENOTFOUND && strchr(program, '/') == 0) {
 	/* Search for program on path. */
-	for (;;) {
-	    char *p;
+		for (;;) {
+		    char *p;
 
-	    while (*path == ':')
-		++path;
+		    while (*path == ':')
+				++path;
 
-	    if (strcmp(path, "") == 0)
-		break;
+		    if (strcmp(path, "") == 0)
+				break;
 
-	    p = strchr(path, ':');
-	    if (p != 0) {
-		memcpy(exeName, path, p - path);
-		exeName[p - path] = '\0';
-		path = p + 1;
-	    } else {
-		strcpy(exeName, path);
-		path = "";
-	    }
+		    p = strchr(path, ':');
+		    if (p != 0) {
+				memcpy(exeName, path, p - path);
+				exeName[p - path] = '\0';
+				path = p + 1;
+		    } else {
+				strcpy(exeName, path);
+				path = "";
+		    }
 
-	    strcat(exeName, "/");
-	    strcat(exeName, program);
+		    strcat(exeName, "/");
+		    strcat(exeName, program);
 
-	    if (!Ends_With(exeName, ".exe"))
-		strcat(exeName, ".exe");
+		    if (!Ends_With(exeName, ".exe"))
+			strcat(exeName, ".exe");
 
-	    /*Print("exeName=%s\n", exeName);*/
-	    pid = Spawn_Program(exeName, command
-		);
-	    if (pid != ENOTFOUND)
-		break;
-	}
+		    /*Print("exeName=%s\n", exeName);*/
+		    pid = Spawn_Program(exeName, command
+			);
+		    if (pid != ENOTFOUND)
+			break;
+		}
     }
 
     return pid;
