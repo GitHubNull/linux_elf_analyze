@@ -34,3 +34,11 @@
 
 # img
 *.img
+
+# kernel final file
+.*.cmd
+Module.*
+*.mod.c
+modules.order
+*.mod.o 
+
