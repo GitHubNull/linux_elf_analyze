@@ -41,4 +41,4 @@ Module.*
 *.mod.c
 modules.order
 *.mod.o 
-
+*.mod

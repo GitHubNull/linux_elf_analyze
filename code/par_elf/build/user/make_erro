@@ -1,0 +1,8 @@
+client.c: In function ‘main’:
+client.c:83:68: warning: passing argument 6 of ‘recvfrom’ makes pointer from integer without a cast [enabled by default]
+     ret = recvfrom(skfd, &info, sizeof(struct _my_msg), 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+                                                                    ^
+In file included from client.c:10:0:
+/usr/include/x86_64-linux-gnu/sys/socket.h:174:16: note: expected ‘socklen_t * __restrict__’ but argument is of type ‘long unsigned int’
+ extern ssize_t recvfrom (int __fd, void *__restrict __buf, size_t __n,
+                ^
