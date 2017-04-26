@@ -23,14 +23,4 @@ clean:
 	@echo "clean kernel_model" 
 	rm -rf $(BUILD_DIR)/.[!.]* $(BUILD_DIR)/* \
 		2>$(BUILD_DIR)/rm_erro
-endif
-
-# \
-# 		$(BUILD_DIR)/.*.*.*.cmd \
-# 		$(BUILD_DIR)/.*.*.cmd \
-# 		$(BUILD_DIR)/Module.* \
-# 		$(BUILD_DIR)/*.ko \
-# 		$(BUILD_DIR)/*.mod.c \
-# 		$(BUILD_DIR)/modules.order \
-# 		$(BUILD_DIR)/*.mod.o \
-# 		$(BUILD_DIR)/*.o \		
+endif	
