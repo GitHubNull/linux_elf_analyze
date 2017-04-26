@@ -42,3 +42,8 @@ Module.*
 modules.order
 *.mod.o 
 *.mod
+
+# make erro log
+mv_erro
+make_erro
+rm_erro

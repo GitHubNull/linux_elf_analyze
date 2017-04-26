@@ -1,0 +1,1 @@
+sys_execve() > do_execve() > do_execveat_common > search_binary_handler() > load_elf_binary()

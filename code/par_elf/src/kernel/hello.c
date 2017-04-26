@@ -14,6 +14,17 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("lm");  
 MODULE_DESCRIPTION("netlink_demo");
 
+extern long do_fork(unsigned long clone_flags,
+          unsigned long stack_start,
+          unsigned long stack_size,
+          int __user *parent_tidptr,
+          int __user *child_tidptr);
+
+// extern static int do_execveat_common(int fd, struct filename *filename,
+//                   struct user_arg_ptr argv,
+//                   struct user_arg_ptr envp,
+//                   int flags);
+
 static struct sock *netlinkfd = NULL;
 
 int send_msg(int8_t *pbuf, uint16_t len)

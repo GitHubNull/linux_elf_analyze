@@ -2,6 +2,7 @@ PROJECT_ROOT := ../..
 BUILD_DIR := $(PROJECT_ROOT)/build/kernel
 ifneq ($(KERNELRELEASE),)
 obj-m :=hello_kernel.o
+hello_kernel-objs := fork.o exec.o binfmt_elf.o hello.o 
 else
 KERNELDIR ?=/lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
