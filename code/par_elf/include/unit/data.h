@@ -18,5 +18,11 @@
 #define C_START "05"	// complte start app
 #define E_START "06"	// start app erro
 
+typedef struct
+{
+	char **data;
+	int cnt;
+}DATA_PACK;
+
 
 #endif

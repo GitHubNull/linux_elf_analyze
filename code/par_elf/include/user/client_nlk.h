@@ -19,12 +19,6 @@ struct CNLK //client_netlink
 	struct sockaddr_nl dest_addr;
 };
 
-typedef struct
-{
-	char **data;
-	int cnt;
-}DATA_PACK;
-
 struct _my_msg
 {
     struct nlmsghdr hdr;
