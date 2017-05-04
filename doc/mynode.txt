@@ -31,3 +31,5 @@
 
 #学习 Vim 插件 DoxygenToolKit.vim 
 http://blog.csdn.net/liwf616/article/details/51338198
+
+remenber to install libnl

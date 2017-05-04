@@ -1,3 +1,6 @@
+#ifndef CLIENT_C
+#define CLIENT_C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/socket.h>
@@ -6,36 +9,44 @@
 #include <stdint.h>
 #include <unistd.h>
 #include <errno.h>
+#include "../../include/user/client_nlk.h"
+#include "../../include/user/str_pack.h"
 
-#define NETLINK_USER 22
-#define USER_MSG    (NETLINK_USER + 1)
-#define MSG_LEN 100
+// int get_app_cmd_str(char **argv, char *buffer, int cnt);
+// int count_envp(char **envp);
 
-#define MAX_PLOAD 100
-
-struct _my_msg
+int main(int argc, char **argv, char **envp)
 {
-    struct nlmsghdr hdr;
-    int8_t  data[MSG_LEN];
-};
-
-
-
-int main(int argc, char **argv)
-{
-    char *data = "hello kernel";
+#if 0
     struct sockaddr_nl  local, dest_addr;
 
     int skfd;
     struct nlmsghdr *nlh = NULL;
     struct _my_msg info;
     int ret;
+    char buffer[MSG_LEN];
+    char *p = buffer;
+
+    if(1 == argc){
+        printf("Usage: pes your app ...\n");
+        goto out;
+    }
+
+    if(2 < argc){
+        if(0 != get_app_cmd_str(argv, p, argc - 1))
+           goto out;
+    }
+    if(2 == argc){
+        memset(p, '\0', MSG_LEN);
+        strcpy(p, argv[1]);
+    }
+    printf("%s, len = %ld\n", p, strlen(p));
 
     skfd = socket(AF_NETLINK, SOCK_RAW, USER_MSG);
     if(skfd == -1)
     {
         printf("create socket error...%s\n", strerror(errno));
-        return -1;
+       goto out;
     }
 
     memset(&local, 0, sizeof(local));
@@ -46,7 +57,7 @@ int main(int argc, char **argv)
     {
         printf("bind() error\n");
         close(skfd);
-        return -1;
+        goto out;
     }
 
     memset(&dest_addr, 0, sizeof(dest_addr));
@@ -62,29 +73,93 @@ int main(int argc, char **argv)
     nlh->nlmsg_seq = 0;
     nlh->nlmsg_pid = local.nl_pid; //self port
 
-    memcpy(NLMSG_DATA(nlh), data, strlen(data));
+    get_app_cmd_str(argv, p, argc - 1);
+
+    memcpy(NLMSG_DATA(nlh), p, strlen(p));
     ret = sendto(skfd, nlh, nlh->nlmsg_len, 0, (struct sockaddr *)&dest_addr, sizeof(struct sockaddr_nl));
 
     if(!ret)
     {
         perror("sendto error1\n");
         close(skfd);
-        exit(-1);
+        goto out;
     }
     printf("wait kernel msg!\n");
     memset(&info, 0, sizeof(info));
-    ret = recvfrom(skfd, &info, sizeof(struct _my_msg), 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+    ret = recvfrom(skfd, &info, sizeof(struct _my_msg), 0, (struct sockaddr *)&dest_addr, (socklen_t *)sizeof(dest_addr));
     if(!ret)
     {
         perror("recv form kernel error\n");
         close(skfd);
-        exit(-1);
+        goto out;
     }
 
     printf("msg receive from kernel:%s\n", info.data);
+
+out:
     close(skfd);
 
     free((void *)nlh);
     return 0;
+#endif
+    struct CNLK cnlk;
+    int retval = init_cnlk(&cnlk);
+    if(0 != retval)
+        goto out1;
+    char *tmp = (char *)malloc(sizeof(char) * 8092 * 3);
+    memset(tmp, 0, sizeof(char) * 8092 * 3);
 
+    retval = count_envp(envp);
+    if(0 > retval)
+        goto out2;
+    int i = 0;
+
+#if 1
+    for(; i < retval; i++){
+        printf("envp[%d] = %s\n", i, envp[i]);
+    }
+#endif
+
+    retval = get_app_cmd_str(envp, tmp, retval);
+    if(0 != retval)
+        goto out2;
+    int envp_len = strlen(tmp);
+
+    retval = send_argv(argv, argc, envp_len, cnlk);
+    if(1 != retval){
+         goto out2;
+    }
+
+    DATA_PACK data_pack;
+    retval = pack_str(tmp, &data_pack);
+    if(0 != retval){
+        printf("pack_str erro...\n");
+        goto out3;
+    }
+    retval = send_envp(data_pack, cnlk);
+    if(0 != retval){
+        printf("send_envp erro...\n");
+        goto out3;
+    }
+    
+    retval = send_start(cnlk);
+    if(0 != retval){
+        printf("send_start erro...\n");
+        goto out3;
+    }
+
+    free(tmp);
+    return 0;
+
+out1:
+    return -1;
+out2:
+    free(tmp);
+    return -2;
+out3:
+    free(tmp);
+    free_data_pack(&data_pack);
+    return -2; 
 }
+
+#endif

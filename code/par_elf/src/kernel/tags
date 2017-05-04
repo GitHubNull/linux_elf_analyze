@@ -1,0 +1,295 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARCH_MIN_MMSTRUCT_ALIGN	fork.c	1758;"	d	file:
+ARCH_MIN_TASKALIGN	fork.c	260;"	d	file:
+BAD_ADDR	binfmt_elf.c	90;"	d	file:
+BUILD_DIR	Makefile	/^BUILD_DIR := $(PROJECT_ROOT)\/build\/kernel$/;"	m
+COMPAT_SYSCALL_DEFINE3	exec.c	/^COMPAT_SYSCALL_DEFINE3(execve, const char __user *, filename,$/;"	f
+COMPAT_SYSCALL_DEFINE5	exec.c	/^COMPAT_SYSCALL_DEFINE5(execveat, int, fd,$/;"	f
+CREATE_TRACE_POINTS	fork.c	87;"	d	file:
+ELF_BASE_PLATFORM	binfmt_elf.c	145;"	d	file:
+ELF_CORE_EFLAGS	binfmt_elf.c	75;"	d	file:
+ELF_MIN_ALIGN	binfmt_elf.c	69;"	d	file:
+ELF_MIN_ALIGN	binfmt_elf.c	71;"	d	file:
+ELF_PAGEALIGN	binfmt_elf.c	80;"	d	file:
+ELF_PAGEOFFSET	binfmt_elf.c	79;"	d	file:
+ELF_PAGESTART	binfmt_elf.c	78;"	d	file:
+FILTER	binfmt_elf.c	1234;"	d	file:
+FILTER	binfmt_elf.c	1307;"	d	file:
+INIT_ARCH_ELF_STATE	binfmt_elf.c	459;"	d	file:
+KERNELDIR	Makefile	/^KERNELDIR ?=\/lib\/modules\/$(shell uname -r)\/build$/;"	m
+MAX_FILE_NOTE_SIZE	binfmt_elf.c	1493;"	d	file:
+NETLINK_USER	hello.c	9;"	d	file:
+NEW_AUX_ENT	binfmt_elf.c	218;"	d	file:
+NEW_AUX_ENT	binfmt_elf.c	263;"	d	file:
+PROJECT_ROOT	Makefile	/^PROJECT_ROOT := ..\/..$/;"	m
+PRSTATUS_SIZE	binfmt_elf.c	1618;"	d	file:
+PR_REG_PTR	binfmt_elf.c	1622;"	d	file:
+PR_REG_SIZE	binfmt_elf.c	1614;"	d	file:
+PWD	Makefile	/^PWD := $(shell pwd)$/;"	m
+SET_PR_FPVALID	binfmt_elf.c	1626;"	d	file:
+STACK_ADD	binfmt_elf.c	126;"	d	file:
+STACK_ADD	binfmt_elf.c	133;"	d	file:
+STACK_ALLOC	binfmt_elf.c	129;"	d	file:
+STACK_ALLOC	binfmt_elf.c	136;"	d	file:
+STACK_RND_MASK	binfmt_elf.c	643;"	d	file:
+STACK_ROUND	binfmt_elf.c	127;"	d	file:
+STACK_ROUND	binfmt_elf.c	134;"	d	file:
+SYSCALL_DEFINE0	fork.c	/^SYSCALL_DEFINE0(fork)$/;"	f
+SYSCALL_DEFINE0	fork.c	/^SYSCALL_DEFINE0(vfork)$/;"	f
+SYSCALL_DEFINE1	exec.c	/^SYSCALL_DEFINE1(uselib, const char __user *, library)$/;"	f
+SYSCALL_DEFINE1	fork.c	/^SYSCALL_DEFINE1(set_tid_address, int __user *, tidptr)$/;"	f
+SYSCALL_DEFINE1	fork.c	/^SYSCALL_DEFINE1(unshare, unsigned long, unshare_flags)$/;"	f
+SYSCALL_DEFINE3	exec.c	/^SYSCALL_DEFINE3(execve,$/;"	f
+SYSCALL_DEFINE5	exec.c	/^SYSCALL_DEFINE5(execveat,$/;"	f
+SYSCALL_DEFINE5	fork.c	/^SYSCALL_DEFINE5(clone, unsigned long, clone_flags, unsigned long, newsp,$/;"	f
+USER_MSG	hello.c	10;"	d	file:
+USER_PORT	hello.c	11;"	d	file:
+__bprm_mm_init	exec.c	/^static int __bprm_mm_init(struct linux_binprm *bprm)$/;"	f	file:
+__cleanup_sighand	fork.c	/^void __cleanup_sighand(struct sighand_struct *sighand)$/;"	f
+__mmdrop	fork.c	/^EXPORT_SYMBOL_GPL(__mmdrop);$/;"	v
+__mmdrop	fork.c	/^void __mmdrop(struct mm_struct *mm)$/;"	f
+__put_task_struct	fork.c	/^EXPORT_SYMBOL_GPL(__put_task_struct);$/;"	v
+__put_task_struct	fork.c	/^void __put_task_struct(struct task_struct *tsk)$/;"	f
+__register_binfmt	exec.c	/^EXPORT_SYMBOL(__register_binfmt);$/;"	v
+__register_binfmt	exec.c	/^void __register_binfmt(struct linux_binfmt * fmt, int insert)$/;"	f
+__set_task_comm	exec.c	/^void __set_task_comm(struct task_struct *tsk, const char *buf, bool exec)$/;"	f
+account_kernel_stack	fork.c	/^static void account_kernel_stack(struct thread_info *ti, int account)$/;"	f	file:
+acct_arg_size	exec.c	/^static inline void acct_arg_size(struct linux_binprm *bprm, unsigned long pages)$/;"	f	file:
+acct_arg_size	exec.c	/^static void acct_arg_size(struct linux_binprm *bprm, unsigned long pages)$/;"	f	file:
+alloc_task_struct_node	fork.c	/^static inline struct task_struct *alloc_task_struct_node(int node)$/;"	f	file:
+alloc_thread_info_node	fork.c	/^static struct thread_info *alloc_thread_info_node(struct task_struct *tsk,$/;"	f	file:
+allocate_mm	fork.c	519;"	d	file:
+always_dump_vma	binfmt_elf.c	/^static bool always_dump_vma(struct vm_area_struct *vma)$/;"	f	file:
+arch_check_elf	binfmt_elf.c	/^static inline int arch_check_elf(struct elfhdr *ehdr, bool has_interp,$/;"	f	file:
+arch_dup_task_struct	fork.c	/^int __weak arch_dup_task_struct(struct task_struct *dst,$/;"	f
+arch_elf_pt_proc	binfmt_elf.c	/^static inline int arch_elf_pt_proc(struct elfhdr *ehdr,$/;"	f	file:
+arch_elf_state	binfmt_elf.c	/^struct arch_elf_state {$/;"	s	file:
+arch_release_task_struct	fork.c	/^void __weak arch_release_task_struct(struct task_struct *tsk)$/;"	f
+arch_release_thread_info	fork.c	/^void __weak arch_release_thread_info(struct thread_info *ti)$/;"	f
+arch_task_cache_init	fork.c	/^void __init __weak arch_task_cache_init(void) { }$/;"	f
+auxv	binfmt_elf.c	/^	struct memelfnote auxv;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+bprm_change_interp	exec.c	/^EXPORT_SYMBOL(bprm_change_interp);$/;"	v
+bprm_change_interp	exec.c	/^int bprm_change_interp(char *interp, struct linux_binprm *bprm)$/;"	f
+bprm_mm_init	exec.c	/^static int bprm_mm_init(struct linux_binprm *bprm)$/;"	f	file:
+cfg	hello.c	/^struct netlink_kernel_cfg cfg =$/;"	v	typeref:struct:netlink_kernel_cfg
+check_mm	fork.c	/^static void check_mm(struct mm_struct *mm)$/;"	f	file:
+check_unsafe_exec	exec.c	/^static void check_unsafe_exec(struct linux_binprm *bprm)$/;"	f	file:
+check_unshare_flags	fork.c	/^static int check_unshare_flags(unsigned long unshare_flags)$/;"	f	file:
+compat	exec.c	/^		const compat_uptr_t __user *compat;$/;"	m	union:user_arg_ptr::__anon1	file:
+compat_do_execve	exec.c	/^static int compat_do_execve(struct filename *filename,$/;"	f	file:
+compat_do_execveat	exec.c	/^static int compat_do_execveat(int fd, struct filename *filename,$/;"	f	file:
+complete_vfork_done	fork.c	/^static void complete_vfork_done(struct task_struct *tsk)$/;"	f	file:
+copy_files	fork.c	/^static int copy_files(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_fs	fork.c	/^static int copy_fs(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_io	fork.c	/^static int copy_io(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_mm	fork.c	/^static int copy_mm(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_process	fork.c	/^static struct task_struct *copy_process(unsigned long clone_flags,$/;"	f	file:
+copy_seccomp	fork.c	/^static void copy_seccomp(struct task_struct *p)$/;"	f	file:
+copy_sighand	fork.c	/^static int copy_sighand(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_signal	fork.c	/^static int copy_signal(unsigned long clone_flags, struct task_struct *tsk)$/;"	f	file:
+copy_strings	exec.c	/^static int copy_strings(int argc, struct user_arg_ptr argv,$/;"	f	file:
+copy_strings_kernel	exec.c	/^EXPORT_SYMBOL(copy_strings_kernel);$/;"	v
+copy_strings_kernel	exec.c	/^int copy_strings_kernel(int argc, const char *const *__argv,$/;"	f
+count	exec.c	/^static int count(struct user_arg_ptr argv, int max)$/;"	f	file:
+create_elf_tables	binfmt_elf.c	/^create_elf_tables(struct linux_binprm *bprm, struct elfhdr *exec,$/;"	f	file:
+csigdata	binfmt_elf.c	/^	user_siginfo_t csigdata;$/;"	m	struct:elf_note_info	file:
+data	binfmt_elf.c	/^	void *data;$/;"	m	struct:memelfnote	file:
+datasz	binfmt_elf.c	/^	unsigned int datasz;$/;"	m	struct:memelfnote	file:
+de_thread	exec.c	/^static int de_thread(struct task_struct *tsk)$/;"	f	file:
+default_dump_filter	fork.c	/^static unsigned long default_dump_filter = MMF_DUMP_FILTER_DEFAULT;$/;"	v	file:
+do_execve	exec.c	/^int do_execve(struct filename *filename,$/;"	f
+do_execveat	exec.c	/^int do_execveat(int fd, struct filename *filename,$/;"	f
+do_execveat_common	exec.c	/^static int do_execveat_common(int fd, struct filename *filename,$/;"	f	file:
+do_fork	fork.c	/^EXPORT_SYMBOL(do_fork);$/;"	v
+do_fork	fork.c	/^long do_fork(unsigned long clone_flags,$/;"	f
+do_open_execat	exec.c	/^static struct file *do_open_execat(int fd, struct filename *name, int flags)$/;"	f	file:
+do_thread_regset_writeback	binfmt_elf.c	/^static void do_thread_regset_writeback(struct task_struct *task,$/;"	f	file:
+dup_mm	fork.c	/^static struct mm_struct *dup_mm(struct task_struct *tsk)$/;"	f	file:
+dup_mm_exe_file	fork.c	/^static void dup_mm_exe_file(struct mm_struct *oldmm, struct mm_struct *newmm)$/;"	f	file:
+dup_mmap	fork.c	/^static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)$/;"	f	file:
+dup_mmap	fork.c	512;"	d	file:
+dup_task_struct	fork.c	/^static struct task_struct *dup_task_struct(struct task_struct *orig)$/;"	f	file:
+elf_core_dump	binfmt_elf.c	/^static int elf_core_dump(struct coredump_params *cprm)$/;"	f	file:
+elf_core_dump	binfmt_elf.c	65;"	d	file:
+elf_dump_thread_status	binfmt_elf.c	/^static int elf_dump_thread_status(long signr, struct elf_thread_status *t)$/;"	f	file:
+elf_format	binfmt_elf.c	/^static struct linux_binfmt elf_format = {$/;"	v	typeref:struct:linux_binfmt	file:
+elf_map	binfmt_elf.c	/^static unsigned long elf_map(struct file *filep, unsigned long addr,$/;"	f	file:
+elf_note_info	binfmt_elf.c	/^struct elf_note_info {$/;"	s	file:
+elf_note_info_init	binfmt_elf.c	/^static int elf_note_info_init(struct elf_note_info *info)$/;"	f	file:
+elf_thread_core_info	binfmt_elf.c	/^struct elf_thread_core_info {$/;"	s	file:
+elf_thread_status	binfmt_elf.c	/^struct elf_thread_status$/;"	s	file:
+exec_binprm	exec.c	/^static int exec_binprm(struct linux_binprm *bprm)$/;"	f	file:
+exec_mmap	exec.c	/^static int exec_mmap(struct mm_struct *mm)$/;"	f	file:
+files	binfmt_elf.c	/^	struct memelfnote files;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+files_cachep	fork.c	/^struct kmem_cache *files_cachep;$/;"	v	typeref:struct:kmem_cache
+fill_auxv_note	binfmt_elf.c	/^static void fill_auxv_note(struct memelfnote *note, struct mm_struct *mm)$/;"	f	file:
+fill_elf_header	binfmt_elf.c	/^static void fill_elf_header(struct elfhdr *elf, int segs,$/;"	f	file:
+fill_elf_note_phdr	binfmt_elf.c	/^static void fill_elf_note_phdr(struct elf_phdr *phdr, int sz, loff_t offset)$/;"	f	file:
+fill_extnum_info	binfmt_elf.c	/^static void fill_extnum_info(struct elfhdr *elf, struct elf_shdr *shdr4extnum,$/;"	f	file:
+fill_files_note	binfmt_elf.c	/^static int fill_files_note(struct memelfnote *note)$/;"	f	file:
+fill_note	binfmt_elf.c	/^static void fill_note(struct memelfnote *note, const char *name, int type, $/;"	f	file:
+fill_note_info	binfmt_elf.c	/^static int fill_note_info(struct elfhdr *elf, int phdrs,$/;"	f	file:
+fill_prstatus	binfmt_elf.c	/^static void fill_prstatus(struct elf_prstatus *prstatus,$/;"	f	file:
+fill_psinfo	binfmt_elf.c	/^static int fill_psinfo(struct elf_prpsinfo *psinfo, struct task_struct *p,$/;"	f	file:
+fill_siginfo_note	binfmt_elf.c	/^static void fill_siginfo_note(struct memelfnote *note, user_siginfo_t *csigdata,$/;"	f	file:
+fill_thread_core_info	binfmt_elf.c	/^static int fill_thread_core_info(struct elf_thread_core_info *t,$/;"	f	file:
+first_vma	binfmt_elf.c	/^static struct vm_area_struct *first_vma(struct task_struct *tsk,$/;"	f	file:
+flush_arg_page	exec.c	/^static void flush_arg_page(struct linux_binprm *bprm, unsigned long pos,$/;"	f	file:
+flush_old_exec	exec.c	/^EXPORT_SYMBOL(flush_old_exec);$/;"	v
+flush_old_exec	exec.c	/^int flush_old_exec(struct linux_binprm * bprm)$/;"	f
+fork_idle	fork.c	/^struct task_struct *fork_idle(int cpu)$/;"	f
+fork_init	fork.c	/^void __init fork_init(unsigned long mempages)$/;"	f
+fpu	binfmt_elf.c	/^	elf_fpregset_t *fpu;$/;"	m	struct:elf_note_info	file:
+fpu	binfmt_elf.c	/^	elf_fpregset_t fpu;		\/* NT_PRFPREG *\/$/;"	m	struct:elf_thread_status	file:
+free_arg_page	exec.c	/^static void free_arg_page(struct linux_binprm *bprm, int i)$/;"	f	file:
+free_arg_pages	exec.c	/^static void free_arg_pages(struct linux_binprm *bprm)$/;"	f	file:
+free_bprm	exec.c	/^static void free_bprm(struct linux_binprm *bprm)$/;"	f	file:
+free_mm	fork.c	520;"	d	file:
+free_note_info	binfmt_elf.c	/^static void free_note_info(struct elf_note_info *info)$/;"	f	file:
+free_signal_struct	fork.c	/^static inline void free_signal_struct(struct signal_struct *sig)$/;"	f	file:
+free_task	fork.c	/^EXPORT_SYMBOL(free_task);$/;"	v
+free_task	fork.c	/^void free_task(struct task_struct *tsk)$/;"	f
+free_task_struct	fork.c	/^static inline void free_task_struct(struct task_struct *tsk)$/;"	f	file:
+free_thread_info	fork.c	/^static inline void free_thread_info(struct thread_info *ti)$/;"	f	file:
+free_thread_info	fork.c	/^static void free_thread_info(struct thread_info *ti)$/;"	f	file:
+fs_cachep	fork.c	/^struct kmem_cache *fs_cachep;$/;"	v	typeref:struct:kmem_cache
+get_arg_page	exec.c	/^static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,$/;"	f	file:
+get_mm_exe_file	fork.c	/^struct file *get_mm_exe_file(struct mm_struct *mm)$/;"	f
+get_note_info_size	binfmt_elf.c	/^static size_t get_note_info_size(struct elf_note_info *info)$/;"	f	file:
+get_task_comm	exec.c	/^EXPORT_SYMBOL_GPL(get_task_comm);$/;"	v
+get_task_comm	exec.c	/^char *get_task_comm(char *buf, struct task_struct *tsk)$/;"	f
+get_task_mm	fork.c	/^EXPORT_SYMBOL_GPL(get_task_mm);$/;"	v
+get_task_mm	fork.c	/^struct mm_struct *get_task_mm(struct task_struct *task)$/;"	f
+get_user_arg_ptr	exec.c	/^static const char __user *get_user_arg_ptr(struct user_arg_ptr argv, int nr)$/;"	f	file:
+hello_kernel-objs	Makefile	/^hello_kernel-objs := hello.o$/;"	m
+init_idle_pids	fork.c	/^static inline void init_idle_pids(struct pid_link *links)$/;"	f	file:
+init_task_pid	fork.c	/^init_task_pid(struct task_struct *task, enum pid_type type, struct pid *pid)$/;"	f	file:
+install_exec_creds	exec.c	/^EXPORT_SYMBOL(install_exec_creds);$/;"	v
+install_exec_creds	exec.c	/^void install_exec_creds(struct linux_binprm *bprm)$/;"	f
+is_compat	exec.c	/^	bool is_compat;$/;"	m	struct:user_arg_ptr	file:
+kernel_read	exec.c	/^EXPORT_SYMBOL(kernel_read);$/;"	v
+kernel_read	exec.c	/^int kernel_read(struct file *file, loff_t offset,$/;"	f
+kernel_thread	fork.c	/^pid_t kernel_thread(int (*fn)(void *), void *arg, unsigned long flags)$/;"	f
+list	binfmt_elf.c	/^	struct list_head list;$/;"	m	struct:elf_thread_status	typeref:struct:elf_thread_status::list_head	file:
+load_elf_binary	binfmt_elf.c	/^static int load_elf_binary(struct linux_binprm *bprm)$/;"	f	file:
+load_elf_interp	binfmt_elf.c	/^static unsigned long load_elf_interp(struct elfhdr *interp_elf_ex,$/;"	f	file:
+load_elf_library	binfmt_elf.c	/^static int load_elf_library(struct file *file)$/;"	f	file:
+load_elf_library	binfmt_elf.c	55;"	d	file:
+load_elf_phdrs	binfmt_elf.c	/^static struct elf_phdr *load_elf_phdrs(struct elfhdr *elf_ex,$/;"	f	file:
+lockdep_tasklist_lock_is_held	fork.c	/^EXPORT_SYMBOL_GPL(lockdep_tasklist_lock_is_held);$/;"	v
+lockdep_tasklist_lock_is_held	fork.c	/^int lockdep_tasklist_lock_is_held(void)$/;"	f
+max_threads	fork.c	/^int max_threads;		\/* tunable limit on nr_threads *\/$/;"	v
+memelfnote	binfmt_elf.c	/^struct memelfnote$/;"	s	file:
+mm_access	fork.c	/^struct mm_struct *mm_access(struct task_struct *task, unsigned int mode)$/;"	f
+mm_alloc	fork.c	/^struct mm_struct *mm_alloc(void)$/;"	f
+mm_alloc_pgd	fork.c	/^static inline int mm_alloc_pgd(struct mm_struct *mm)$/;"	f	file:
+mm_alloc_pgd	fork.c	513;"	d	file:
+mm_cachep	fork.c	/^static struct kmem_cache *mm_cachep;$/;"	v	typeref:struct:kmem_cache	file:
+mm_free_pgd	fork.c	/^static inline void mm_free_pgd(struct mm_struct *mm)$/;"	f	file:
+mm_free_pgd	fork.c	514;"	d	file:
+mm_init	fork.c	/^static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p)$/;"	f	file:
+mm_init_aio	fork.c	/^static void mm_init_aio(struct mm_struct *mm)$/;"	f	file:
+mm_init_owner	fork.c	/^static void mm_init_owner(struct mm_struct *mm, struct task_struct *p)$/;"	f	file:
+mm_release	fork.c	/^void mm_release(struct task_struct *tsk, struct mm_struct *mm)$/;"	f
+mmput	fork.c	/^EXPORT_SYMBOL_GPL(mmput);$/;"	v
+mmput	fork.c	/^void mmput(struct mm_struct *mm)$/;"	f
+name	binfmt_elf.c	/^	const char *name;$/;"	m	struct:memelfnote	file:
+native	exec.c	/^		const char __user *const __user *native;$/;"	m	union:user_arg_ptr::__anon1	file:
+netlinkfd	hello.c	/^static struct sock *netlinkfd = NULL;$/;"	v	typeref:struct:sock	file:
+next	binfmt_elf.c	/^	struct elf_thread_core_info *next;$/;"	m	struct:elf_thread_core_info	typeref:struct:elf_thread_core_info::elf_thread_core_info	file:
+next_vma	binfmt_elf.c	/^static struct vm_area_struct *next_vma(struct vm_area_struct *this_vma,$/;"	f	file:
+notes	binfmt_elf.c	/^	struct memelfnote *notes;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+notes	binfmt_elf.c	/^	struct memelfnote notes[0];$/;"	m	struct:elf_thread_core_info	typeref:struct:elf_thread_core_info::memelfnote	file:
+notes	binfmt_elf.c	/^	struct memelfnote notes[3];$/;"	m	struct:elf_thread_status	typeref:struct:elf_thread_status::memelfnote	file:
+notes_files	binfmt_elf.c	/^	struct memelfnote *notes_files;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+notesize	binfmt_elf.c	/^static int notesize(struct memelfnote *en)$/;"	f	file:
+nr_processes	fork.c	/^int nr_processes(void)$/;"	f
+nr_threads	fork.c	/^int nr_threads;			\/* The idle threads do not count.. *\/$/;"	v
+num_notes	binfmt_elf.c	/^	int num_notes;$/;"	m	struct:elf_thread_status	file:
+numnote	binfmt_elf.c	/^	int numnote;$/;"	m	struct:elf_note_info	file:
+obj-m	Makefile	/^obj-m :=hello_kernel.o$/;"	m
+open_exec	exec.c	/^EXPORT_SYMBOL(open_exec);$/;"	v
+open_exec	exec.c	/^struct file *open_exec(const char *name)$/;"	f
+padzero	binfmt_elf.c	/^static int padzero(unsigned long elf_bss)$/;"	f	file:
+posix_cpu_timers_init	fork.c	/^static void posix_cpu_timers_init(struct task_struct *tsk)$/;"	f	file:
+posix_cpu_timers_init_group	fork.c	/^static void posix_cpu_timers_init_group(struct signal_struct *sig)$/;"	f	file:
+prepare_binprm	exec.c	/^EXPORT_SYMBOL(prepare_binprm);$/;"	v
+prepare_binprm	exec.c	/^int prepare_binprm(struct linux_binprm *bprm)$/;"	f
+prepare_bprm_creds	exec.c	/^int prepare_bprm_creds(struct linux_binprm *bprm)$/;"	f
+printable	exec.c	1357;"	d	file:
+proc_caches_init	fork.c	/^void __init proc_caches_init(void)$/;"	f
+prstatus	binfmt_elf.c	/^	struct elf_prstatus *prstatus;	\/* NT_PRSTATUS *\/$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::elf_prstatus	file:
+prstatus	binfmt_elf.c	/^	struct elf_prstatus prstatus;	\/* NT_PRSTATUS *\/$/;"	m	struct:elf_thread_status	typeref:struct:elf_thread_status::elf_prstatus	file:
+prstatus	binfmt_elf.c	/^	struct elf_prstatus prstatus;$/;"	m	struct:elf_thread_core_info	typeref:struct:elf_thread_core_info::elf_prstatus	file:
+psinfo	binfmt_elf.c	/^	struct elf_prpsinfo *psinfo;	\/* NT_PRPSINFO *\/$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::elf_prpsinfo	file:
+psinfo	binfmt_elf.c	/^	struct memelfnote psinfo;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+ptr	exec.c	/^	} ptr;$/;"	m	struct:user_arg_ptr	typeref:union:user_arg_ptr::__anon1	file:
+put_arg_page	exec.c	/^static void put_arg_page(struct page *page)$/;"	f	file:
+put_binfmt	exec.c	/^static inline void put_binfmt(struct linux_binfmt * fmt)$/;"	f	file:
+put_signal_struct	fork.c	/^static inline void put_signal_struct(struct signal_struct *sig)$/;"	f	file:
+randomize_stack_top	binfmt_elf.c	/^static unsigned long randomize_stack_top(unsigned long stack_top)$/;"	f	file:
+read_code	exec.c	/^EXPORT_SYMBOL(read_code);$/;"	v
+read_code	exec.c	/^ssize_t read_code(struct file *file, unsigned long addr, loff_t pos, size_t len)$/;"	f
+recv_cb	hello.c	/^static void recv_cb(struct sk_buff *skb)$/;"	f	file:
+remove_arg_zero	exec.c	/^EXPORT_SYMBOL(remove_arg_zero);$/;"	v
+remove_arg_zero	exec.c	/^int remove_arg_zero(struct linux_binprm *bprm)$/;"	f
+rt_mutex_init_task	fork.c	/^static void rt_mutex_init_task(struct task_struct *p)$/;"	f	file:
+search_binary_handler	exec.c	/^EXPORT_SYMBOL(search_binary_handler);$/;"	v
+search_binary_handler	exec.c	/^int search_binary_handler(struct linux_binprm *bprm)$/;"	f
+send_msg	hello.c	/^int send_msg(int8_t *pbuf, uint16_t len)$/;"	f
+set_binfmt	exec.c	/^EXPORT_SYMBOL(set_binfmt);$/;"	v
+set_binfmt	exec.c	/^void set_binfmt(struct linux_binfmt *new)$/;"	f
+set_brk	binfmt_elf.c	/^static int set_brk(unsigned long start, unsigned long end)$/;"	f	file:
+set_dumpable	exec.c	/^void set_dumpable(struct mm_struct *mm, int value)$/;"	f
+set_mm_exe_file	fork.c	/^void set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)$/;"	f
+set_task_stack_end_magic	fork.c	/^void set_task_stack_end_magic(struct task_struct *tsk)$/;"	f
+setup_arg_pages	exec.c	/^EXPORT_SYMBOL(setup_arg_pages);$/;"	v
+setup_arg_pages	exec.c	/^int setup_arg_pages(struct linux_binprm *bprm,$/;"	f
+setup_new_exec	exec.c	/^EXPORT_SYMBOL(setup_new_exec);$/;"	v
+setup_new_exec	exec.c	/^void setup_new_exec(struct linux_binprm * bprm)$/;"	f
+shift_arg_pages	exec.c	/^static int shift_arg_pages(struct vm_area_struct *vma, unsigned long shift)$/;"	f	file:
+sighand_cachep	fork.c	/^struct kmem_cache *sighand_cachep;$/;"	v	typeref:struct:kmem_cache
+sighand_ctor	fork.c	/^static void sighand_ctor(void *data)$/;"	f	file:
+signal_cachep	fork.c	/^static struct kmem_cache *signal_cachep;$/;"	v	typeref:struct:kmem_cache	file:
+signote	binfmt_elf.c	/^	struct memelfnote signote;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::memelfnote	file:
+size	binfmt_elf.c	/^	size_t size;$/;"	m	struct:elf_note_info	file:
+suid_dumpable	exec.c	/^int suid_dumpable = 0;$/;"	v
+task	binfmt_elf.c	/^	struct task_struct *task;$/;"	m	struct:elf_thread_core_info	typeref:struct:elf_thread_core_info::task_struct	file:
+task_struct_cachep	fork.c	/^static struct kmem_cache *task_struct_cachep;$/;"	v	typeref:struct:kmem_cache	file:
+test_netlink_exit	hello.c	/^module_exit(test_netlink_exit);$/;"	v
+test_netlink_exit	hello.c	/^static void __exit test_netlink_exit(void)$/;"	f	file:
+test_netlink_init	hello.c	/^module_init(test_netlink_init);$/;"	v
+test_netlink_init	hello.c	/^static int __init test_netlink_init(void)$/;"	f	file:
+thread	binfmt_elf.c	/^	struct elf_thread_core_info *thread;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::elf_thread_core_info	file:
+thread	binfmt_elf.c	/^	struct task_struct *thread;$/;"	m	struct:elf_thread_status	typeref:struct:elf_thread_status::task_struct	file:
+thread_info_cache	fork.c	/^static struct kmem_cache *thread_info_cache;$/;"	v	typeref:struct:kmem_cache	file:
+thread_info_cache_init	fork.c	/^void thread_info_cache_init(void)$/;"	f
+thread_list	binfmt_elf.c	/^	struct list_head thread_list;$/;"	m	struct:elf_note_info	typeref:struct:elf_note_info::list_head	file:
+thread_notes	binfmt_elf.c	/^	int thread_notes;$/;"	m	struct:elf_note_info	file:
+thread_status_size	binfmt_elf.c	/^	int thread_status_size;$/;"	m	struct:elf_note_info	file:
+total_forks	fork.c	/^unsigned long total_forks;	\/* Handle normal Linux uptimes. *\/$/;"	v
+total_mapping_size	binfmt_elf.c	/^static unsigned long total_mapping_size(struct elf_phdr *cmds, int nr)$/;"	f	file:
+type	binfmt_elf.c	/^	int type;$/;"	m	struct:memelfnote	file:
+unregister_binfmt	exec.c	/^EXPORT_SYMBOL(unregister_binfmt);$/;"	v
+unregister_binfmt	exec.c	/^void unregister_binfmt(struct linux_binfmt * fmt)$/;"	f
+unshare_fd	fork.c	/^static int unshare_fd(unsigned long unshare_flags, struct files_struct **new_fdp)$/;"	f	file:
+unshare_files	fork.c	/^int unshare_files(struct files_struct **displaced)$/;"	f
+unshare_fs	fork.c	/^static int unshare_fs(unsigned long unshare_flags, struct fs_struct **new_fsp)$/;"	f	file:
+user_arg_ptr	exec.c	/^struct user_arg_ptr {$/;"	s	file:
+user_long_t	binfmt_elf.c	42;"	d	file:
+user_siginfo_t	binfmt_elf.c	45;"	d	file:
+valid_arg_len	exec.c	/^static bool valid_arg_len(struct linux_binprm *bprm, long len)$/;"	f	file:
+vm_area_cachep	fork.c	/^struct kmem_cache *vm_area_cachep;$/;"	v	typeref:struct:kmem_cache
+vma_dump_size	binfmt_elf.c	/^static unsigned long vma_dump_size(struct vm_area_struct *vma,$/;"	f	file:
+wait_for_vfork_done	fork.c	/^static int wait_for_vfork_done(struct task_struct *child,$/;"	f	file:
+would_dump	exec.c	/^EXPORT_SYMBOL(would_dump);$/;"	v
+would_dump	exec.c	/^void would_dump(struct linux_binprm *bprm, struct file *file)$/;"	f
+write_note_info	binfmt_elf.c	/^static int write_note_info(struct elf_note_info *info,$/;"	f	file:
+writenote	binfmt_elf.c	/^static int writenote(struct memelfnote *men, struct coredump_params *cprm)$/;"	f	file:
+xfpu	binfmt_elf.c	/^	elf_fpxregset_t *xfpu;$/;"	m	struct:elf_note_info	file:
+xfpu	binfmt_elf.c	/^	elf_fpxregset_t xfpu;		\/* ELF_CORE_XFPREG_TYPE *\/$/;"	m	struct:elf_thread_status	file:

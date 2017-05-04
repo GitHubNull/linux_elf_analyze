@@ -748,7 +748,7 @@ EXPORT_SYMBOL(setup_arg_pages);
 
 #endif /* CONFIG_MMU */
 
-static struct file *do_open_execat(int fd, struct filename *name, int flags)
+static struct file *(int fd, struct filename *name, int flags)
 {
 	struct file *file;
 	int err;

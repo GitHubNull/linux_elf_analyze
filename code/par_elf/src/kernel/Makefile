@@ -1,8 +1,13 @@
 PROJECT_ROOT := ../..
 BUILD_DIR := $(PROJECT_ROOT)/build/kernel
+KBUILD_CFLAGS   += -Wno-sizeof-pointer-memaccess
 ifneq ($(KERNELRELEASE),)
-obj-m :=hello_kernel.o
-hello_kernel-objs := fork.o exec.o binfmt_elf.o hello.o 
+obj-m := fnlk.o
+fnlk-objs := nlk.o str_unpack.o string.o
+# str_unpack-objs := str_unpack.h
+
+# fork.o exec.o binfmt_elf.o
+# exec-objs := internal.h
 else
 KERNELDIR ?=/lib/modules/$(shell uname -r)/build
 PWD := $(shell pwd)
