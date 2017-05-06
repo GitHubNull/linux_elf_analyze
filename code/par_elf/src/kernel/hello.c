@@ -14,11 +14,11 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("lm");  
 MODULE_DESCRIPTION("netlink_demo");
 
-extern long do_fork(unsigned long clone_flags,
-          unsigned long stack_start,
-          unsigned long stack_size,
-          int __user *parent_tidptr,
-          int __user *child_tidptr);
+// extern long do_fork(unsigned long clone_flags,
+//           unsigned long stack_start,
+//           unsigned long stack_size,
+//           int __user *parent_tidptr,
+//           int __user *child_tidptr);
 
 // extern static int do_execveat_common(int fd, struct filename *filename,
 //                   struct user_arg_ptr argv,
@@ -60,12 +60,12 @@ static void recv_cb(struct sk_buff *skb)
 {
     struct nlmsghdr *nlh = NULL;
     void *data = NULL;
-
-    printk("skb->len:%u\n", skb->len);
     if(skb->len >= nlmsg_total_size(0))
     {
         nlh = nlmsg_hdr(skb);
         data = NLMSG_DATA(nlh);
+        printk("nlmsghdr->nlmsg_type:%u\n", nlh->nlmsg_type);
+        printk("nlmsghdr->nlmsg_seq:%u\n", nlh->nlmsg_seq);
         if(data)
         {
             printk("kernel receive data: %s\n", (int8_t *)data);

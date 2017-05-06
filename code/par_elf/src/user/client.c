@@ -58,8 +58,8 @@ int main(int argc, char **argv)
     memset(nlh, 0, sizeof(struct nlmsghdr));
     nlh->nlmsg_len = NLMSG_SPACE(MAX_PLOAD);
     nlh->nlmsg_flags = 0;
-    nlh->nlmsg_type = 0;
-    nlh->nlmsg_seq = 0;
+    nlh->nlmsg_type = 2;
+    nlh->nlmsg_seq = 23;
     nlh->nlmsg_pid = local.nl_pid; //self port
 
     memcpy(NLMSG_DATA(nlh), data, strlen(data));
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     }
     printf("wait kernel msg!\n");
     memset(&info, 0, sizeof(info));
-    ret = recvfrom(skfd, &info, sizeof(struct _my_msg), 0, (struct sockaddr *)&dest_addr, sizeof(dest_addr));
+    ret = recvfrom(skfd, &info, sizeof(struct _my_msg), 0, (struct sockaddr *)&dest_addr, (socklen_t *)sizeof(dest_addr));
     if(!ret)
     {
         perror("recv form kernel error\n");
