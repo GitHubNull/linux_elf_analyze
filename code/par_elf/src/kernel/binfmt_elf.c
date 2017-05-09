@@ -1,14 +1,3 @@
-/*
- * linux/fs/binfmt_elf.c
- *
- * These are the functions used to load ELF format executables as used
- * on SVr4 machines.  Information on the format may be found in the book
- * "UNIX SYSTEM V RELEASE 4 Programmers Guide: Ansi C and Programming Support
- * Tools".
- *
- * Copyright 1993, 1994: Eric Youngdale (ericy@cais.com).
- */
-
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/fs.h>
