@@ -44,6 +44,4 @@ modules.order
 *.mod
 
 # make erro log
-mv_erro
-make_erro
-rm_erro
+./code/par_elf/build
